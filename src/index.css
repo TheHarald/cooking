@@ -1,0 +1,25 @@
+@import "tailwindcss";
+@plugin './hero.ts';
+@source '../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
+@custom-variant dark (&:is(.dark *));
+
+html, body, #root {
+    height: 100%;
+}
+
+
+html, body {
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: auto;
+  overflow: hidden;
+}
+
+
+
+.safe-bottom {
+  padding-bottom: 38px;
+}
+
+.safe-top {
+  padding-top:20px;
+}
