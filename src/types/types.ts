@@ -72,14 +72,12 @@ export enum Unit {
 // ================================
 // ОСНОВНЫЕ ИНТЕРФЕЙСЫ ДАННЫХ
 // ================================
-
 export interface IIngredient {
   id: string;
   name: string;
   amount: number;
   unit: Unit;
   note?: string;
-  category?: string;
 }
 
 export interface ICookingStep {
