@@ -2,7 +2,7 @@ import { makeAutoObservable } from "mobx";
 import { AppRoutes } from "./types";
 
 class NavigationStore {
-  tab: AppRoutes = AppRoutes.Training;
+  tab: AppRoutes = AppRoutes.Cooking;
   navigationDisabled: boolean = false;
 
   constructor() {

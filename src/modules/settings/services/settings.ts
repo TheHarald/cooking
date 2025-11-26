@@ -2,7 +2,7 @@ export const info = {
   buildDate: new Date().toISOString(),
   buildVersion: "dev",
 };
-const infoPath = "/training-js/info.json";
+const infoPath = "/cooking/info.json";
 
 fetch(infoPath)
   .then((response) => response.json())

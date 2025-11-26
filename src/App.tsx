@@ -3,6 +3,7 @@ import { NavigationMenu } from "./modules/navigation/components/navigation-menu"
 import { navigationStore } from "./modules/navigation/services/navigation-store";
 import { AppRoutes } from "./modules/navigation/services/types";
 import { SettingsModule } from "./modules/settings";
+import { CookingConstructor } from "./modules/meal-constructor";
 
 const App = observer(() => {
   const { tab } = navigationStore;
@@ -15,6 +16,10 @@ const App = observer(() => {
             case AppRoutes.Settings: {
               return <SettingsModule />;
             }
+            case AppRoutes.Cooking: {
+              return <CookingConstructor />;
+            }
+
             default:
               return <div>404</div>;
           }

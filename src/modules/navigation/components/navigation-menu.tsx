@@ -1,35 +1,30 @@
-import {
-  ChartBarIcon,
-  Cog6ToothIcon,
-  PencilSquareIcon,
-  TrophyIcon,
-} from "@heroicons/react/24/outline";
 import { Button, ButtonGroup } from "@heroui/react";
 import { observer } from "mobx-react-lite";
 import { navigationStore } from "../services/navigation-store";
 import { AppRoutes } from "../services/types";
 import classNames from "classnames";
+import { CalendarDays, Hamburger, ScrollText, Settings } from "lucide-react";
 
 const appRoutes = [
   {
-    title: "Тренировки",
-    key: AppRoutes.Training,
-    icon: TrophyIcon,
+    title: "Блюда",
+    key: AppRoutes.Cooking,
+    icon: Hamburger,
   },
   {
-    title: "Конструктор",
+    title: "Список покупок",
     key: AppRoutes.Constructor,
-    icon: PencilSquareIcon,
+    icon: ScrollText,
   },
   {
-    title: "Статистика",
+    title: "Рацион",
     key: AppRoutes.Statistics,
-    icon: ChartBarIcon,
+    icon: CalendarDays,
   },
   {
     title: "Настройки",
     key: AppRoutes.Settings,
-    icon: Cog6ToothIcon,
+    icon: Settings,
   },
 ];
 

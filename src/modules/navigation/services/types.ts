@@ -1,5 +1,5 @@
 export enum AppRoutes {
-  Training = "training",
+  Cooking = "Cooking",
   Constructor = "constructor",
   Statistics = "statistics",
   Settings = "settings",

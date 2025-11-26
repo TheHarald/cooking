@@ -17,6 +17,7 @@
     "dayjs": "^1.11.13",
     "dayjs-plugin-duration": "^0.0.1-security",
     "framer-motion": "^12.23.12",
+    "idb": "^8.0.3",
     "lucide-react": "^0.553.0",
     "mobx": "^6.13.7",
     "mobx-react-lite": "^4.1.0",

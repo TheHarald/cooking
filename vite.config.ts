@@ -13,8 +13,8 @@ export default defineConfig({
       registerType: "autoUpdate",
       includeAssets: ["logo192.png", "logo512.png"],
       manifest: {
-        name: "Training",
-        short_name: "Training",
+        name: "Cooking",
+        short_name: "Cooking",
         start_url: "/cooking/",
         scope: "/cooking/",
         orientation: "portrait",
