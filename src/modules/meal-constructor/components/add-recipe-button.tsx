@@ -1,20 +1,21 @@
+import { observer } from "mobx-react-lite";
+import type { IRecipe } from "../../../types/types";
+import { useState } from "react";
 import { Button } from "@heroui/react";
 import { PlusCircle } from "lucide-react";
-import { observer } from "mobx-react-lite";
-import { useState } from "react";
-import { IngredientFormModal } from "./ingredient-form-modal";
-import { Unit, type IIngredient } from "../../types/types";
+import { RecipeFormModal } from "./recipe-form-modal";
 
-const defaultIngredient: IIngredient = {
+const defaultRecipe: IRecipe = {
   id: "new-id",
-  name: "",
-  unit: Unit.GRAMS,
-  amount: 1,
-  note: "",
+  ingredients: [],
+  title: "",
+  description: "",
+  tags: [],
+  favorite: false,
 };
 
-export const AddIngredientButton = observer<{
-  onConfirm: (ingredient: IIngredient) => void;
+export const AddRecipeButton = observer<{
+  onConfirm: (recide: IRecipe) => void;
 }>(({ onConfirm }) => {
   const [open, setOpen] = useState(false);
 
@@ -26,9 +27,9 @@ export const AddIngredientButton = observer<{
     setOpen(true);
   };
 
-  const confirmHandler = (ingredient: IIngredient) => {
+  const confirmHandler = (recide: IRecipe) => {
     onConfirm({
-      ...ingredient,
+      ...recide,
       id: crypto.randomUUID(),
     });
     closeHandler();
@@ -40,10 +41,10 @@ export const AddIngredientButton = observer<{
         <PlusCircle className="size-6" />
       </Button>
       {open ? (
-        <IngredientFormModal
-          title="Создать"
+        <RecipeFormModal
+          recipe={defaultRecipe}
+          title="Создавть"
           onCancel={closeHandler}
-          ingredient={defaultIngredient}
           onConfirm={confirmHandler}
         />
       ) : null}

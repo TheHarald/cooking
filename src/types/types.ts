@@ -102,25 +102,21 @@ export interface IRecipe {
   id: string;
   title: string;
   description: string;
-  imageUrl?: string;
-  servings: number;
-  prepTime: number;
-  cookTime: number;
-  difficulty: Difficulty;
-  category: Category;
+  // difficulty: Difficulty;
+  // category: Category;
   tags: string[];
 
   ingredients: IIngredient[];
-  steps: ICookingStep[];
+  // steps: ICookingStep[];
 
-  notes?: string;
-  source?: string;
-  nutrition?: INutritionInfo;
+  // notes?: string;
+  // source?: string;
+  // nutrition?: INutritionInfo;
 
-  createdAt: Dayjs;
-  updatedAt: Dayjs;
+  // createdAt: number;
+  // updatedAt: number;
   favorite: boolean;
-  rating?: number;
+  // rating?: number;
 }
 
 // ================================

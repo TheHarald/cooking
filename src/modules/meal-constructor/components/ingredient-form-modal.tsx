@@ -11,31 +11,9 @@ import {
 } from "@heroui/react";
 import { observer } from "mobx-react-lite";
 import { useMemo } from "react";
-import { Unit, type IIngredient } from "../../types/types";
+import { Unit, type IIngredient } from "../../../types/types";
 import { makeAutoObservable, toJS } from "mobx";
-
-const unitLabels: Record<Unit, string> = {
-  [Unit.GRAMS]: "гр",
-  [Unit.KILOGRAMS]: "кг",
-  [Unit.MILLIGRAMS]: "мг",
-  [Unit.MILLILITERS]: "мл",
-  [Unit.LITERS]: "л",
-  [Unit.TEASPOON]: "ч.л.",
-  [Unit.TABLESPOON]: "ст.л.",
-  [Unit.CUP]: "стакан",
-  [Unit.PIECES]: "шт",
-  [Unit.BUNCH]: "пучок",
-  [Unit.CLOVE]: "зубчик",
-  [Unit.STALK]: "стебель",
-  [Unit.PINCH]: "щепотка",
-  [Unit.TO_TASTE]: "по вкусу",
-  [Unit.SERVING]: "порция",
-  [Unit.PACKAGE]: "упаковка",
-};
-
-// function getUnitLabel(unit: Unit): string {
-//   return unitLabels[unit] ?? "неизвестно";
-// }
+import { unitLabels } from "../../../services/constants";
 
 class IngredientFormStore {
   ingredient: IIngredient;
@@ -76,8 +54,8 @@ export const IngredientFormModal = observer<{
   return (
     <Modal onClose={onCancel} isOpen>
       <ModalContent>
-        <ModalHeader className="px-2">{title}</ModalHeader>
-        <ModalBody className="px-2">
+        <ModalHeader className="px-4">{title}</ModalHeader>
+        <ModalBody className="px-4">
           <Input
             label="Название"
             value={ingredient.name}
@@ -121,20 +99,19 @@ export const IngredientFormModal = observer<{
             onChange={(e) => store.setField("note", e.target.value)}
             placeholder="Примечание"
           />
-
-          <ModalFooter className="flex justify-between px-0">
-            <Button variant="flat" onPress={onCancel}>
-              Отмена
-            </Button>
-            <Button
-              isDisabled={store.hasError}
-              color="primary"
-              onPress={confirmHandler}
-            >
-              Сохранить
-            </Button>
-          </ModalFooter>
         </ModalBody>
+        <ModalFooter className="flex justify-between px-4">
+          <Button variant="flat" onPress={onCancel}>
+            Отмена
+          </Button>
+          <Button
+            isDisabled={store.hasError}
+            color="primary"
+            onPress={confirmHandler}
+          >
+            Сохранить
+          </Button>
+        </ModalFooter>
       </ModalContent>
     </Modal>
   );
