@@ -14,6 +14,7 @@ import { store } from "../../../services/store";
 import { MealConstructorTabs } from "../services/meal-constructor-constants";
 import { MealConstructorIngredientsList } from "./meal-consructor-ingredients-list";
 import { MealConstructorStepsList } from "./meal-constructor-steps-list";
+import { newId } from "../../../services/constants";
 
 export const RecipeFormModal = observer(() => {
   const { mealConstructor } = store;
@@ -22,7 +23,7 @@ export const RecipeFormModal = observer(() => {
 
   if (targetRecipe === undefined) return null;
 
-  const { title } = targetRecipe;
+  const { title, id } = targetRecipe;
 
   const onCancel = () => {
     mealConstructor.setRecipe(undefined);
@@ -31,7 +32,9 @@ export const RecipeFormModal = observer(() => {
   return (
     <Modal onClose={onCancel} size="full" isOpen>
       <ModalContent>
-        <ModalHeader className="px-4">Блюдо</ModalHeader>
+        <ModalHeader className="px-4">
+          {id === newId ? "Создание" : "Редактирование"}
+        </ModalHeader>
         <ModalBody className="px-4 py-0">
           <Input
             placeholder="Название блюда"

@@ -22,7 +22,7 @@ export class MealConstructorStore {
   }
 
   public setRecipe(recipe: IRecipe | undefined) {
-    this.targetRecipe = recipe;
+    this.targetRecipe = toJS(recipe);
   }
 
   public setIngredient(ingredient: IIngredient | undefined) {
@@ -79,9 +79,14 @@ export class MealConstructorStore {
     );
   }
 
+  public deleteRecipe(id: string) {
+    this.recipes = this.recipes.filter((recipe) => recipe.id !== id);
+  }
+
   public saveRecipe() {
-    console.log("ss");
     if (this.targetRecipe === undefined) return;
+
+    const id = this.targetRecipe.id;
 
     // добавление
     if (this.targetRecipe.id === newId) {
@@ -93,5 +98,12 @@ export class MealConstructorStore {
     }
 
     // редактирование
+
+    const recipe = this.recipes.find((recipe) => recipe.id === id);
+
+    if (recipe === undefined) return;
+
+    Object.assign(recipe, this.targetRecipe);
+    this.targetRecipe = undefined;
   }
 }
