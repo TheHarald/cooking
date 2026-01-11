@@ -1,42 +1,65 @@
 import {
+  Button,
+  Input,
   Modal,
   ModalBody,
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Tab,
+  Tabs,
 } from "@heroui/react";
-import { makeAutoObservable } from "mobx";
 import { observer } from "mobx-react-lite";
-import { useMemo } from "react";
-import { AddIngredientButton } from "./add-ingredient-button";
-import type { IRecipe } from "../../../types/types";
+import { store } from "../../../services/store";
+import { MealConstructorTabs } from "../services/meal-constructor-constants";
+import { MealConstructorIngredientsList } from "./meal-consructor-ingredients-list";
+import { MealConstructorStepsList } from "./meal-constructor-steps-list";
 
-class RecipeFormStore {
-  revicpe: IRecipe;
-  constructor(recipe: IRecipe) {
-    this.revicpe = recipe;
-    makeAutoObservable(this);
-  }
-}
+export const RecipeFormModal = observer(() => {
+  const { mealConstructor } = store;
 
-export const RecipeFormModal = observer<{
-  title: string;
-  recipe: IRecipe;
-  onConfirm: (recipe: IRecipe) => void;
-  onCancel: VoidFunction;
-}>(({ title, recipe: initRecipe, onCancel }) => {
-  const store = useMemo(() => new RecipeFormStore(initRecipe), [initRecipe]);
+  const { targetRecipe, recipeTab } = mealConstructor;
+
+  if (targetRecipe === undefined) return null;
+
+  const { title } = targetRecipe;
+
+  const onCancel = () => {
+    mealConstructor.setRecipe(undefined);
+  };
 
   return (
     <Modal onClose={onCancel} size="full" isOpen>
       <ModalContent>
-        <ModalHeader className="px-4">{title}</ModalHeader>
-        <ModalBody className="px-4">
-          Инргедиенты
-          <AddIngredientButton onConfirm={(d) => console.log(d)} />
+        <ModalHeader className="px-4">Блюдо</ModalHeader>
+        <ModalBody className="px-4 py-0">
+          <Input
+            placeholder="Название блюда"
+            value={title}
+            onChange={(e) =>
+              mealConstructor.setRecipeField("title", e.target.value)
+            }
+          />
+          <Tabs
+            className="self-center"
+            onSelectionChange={(key) =>
+              mealConstructor.setRecipeTab(key as MealConstructorTabs)
+            }
+            selectedKey={recipeTab}
+          >
+            <Tab key={MealConstructorTabs.Ingredients} title="Ингредиенты">
+              <MealConstructorIngredientsList />
+            </Tab>
+            <Tab key={MealConstructorTabs.Steps} title="Шаги">
+              <MealConstructorStepsList />
+            </Tab>
+          </Tabs>
         </ModalBody>
-        <ModalFooter className="px-4">
-          <button>Save</button>
+        <ModalFooter className="px-4 flex flex-row justify-between">
+          <Button onPress={onCancel}>Отмена</Button>
+          <Button color="primary" onPress={() => mealConstructor.saveRecipe()}>
+            Сохранить
+          </Button>
         </ModalFooter>
       </ModalContent>
     </Modal>

@@ -10,56 +10,36 @@ import {
   SelectItem,
 } from "@heroui/react";
 import { observer } from "mobx-react-lite";
-import { useMemo } from "react";
-import { Unit, type IIngredient } from "../../../types/types";
-import { makeAutoObservable, toJS } from "mobx";
+import { Unit } from "../../../types/types";
 import { unitLabels } from "../../../services/constants";
+import { store } from "../../../services/store";
 
-class IngredientFormStore {
-  ingredient: IIngredient;
+export const IngredientFormModal = observer(() => {
+  const { mealConstructor } = store;
 
-  get hasError() {
-    return this.ingredient.name === "" || this.ingredient.amount < 0;
-  }
+  const { targetIngredient, isNewIngredient } = mealConstructor;
 
-  constructor(ingredient: IIngredient) {
-    this.ingredient = { ...ingredient };
-    makeAutoObservable(this);
-  }
+  if (targetIngredient === undefined) return null;
 
-  public setField<K extends keyof IIngredient>(
-    field: K,
-    value: IIngredient[K]
-  ) {
-    this.ingredient[field] = value;
-  }
-}
+  const { name, amount, unit, note } = targetIngredient;
 
-export const IngredientFormModal = observer<{
-  title: string;
-  ingredient: IIngredient;
-  onConfirm: (ingredient: IIngredient) => void;
-  onCancel: VoidFunction;
-}>(({ ingredient: initIngredient, onConfirm, onCancel, title }) => {
-  const store = useMemo(
-    () => new IngredientFormStore(initIngredient),
-    [initIngredient]
-  );
-  const { ingredient } = store;
-
-  const confirmHandler = () => {
-    onConfirm(toJS(store.ingredient));
+  const onCancel = () => {
+    mealConstructor.setIngredient(undefined);
   };
 
   return (
     <Modal onClose={onCancel} isOpen>
       <ModalContent>
-        <ModalHeader className="px-4">{title}</ModalHeader>
+        <ModalHeader className="px-4">
+          {isNewIngredient ? "Создание" : "Редактирование"}
+        </ModalHeader>
         <ModalBody className="px-4">
           <Input
             label="Название"
-            value={ingredient.name}
-            onChange={(e) => store.setField("name", e.target.value)}
+            value={name}
+            onChange={(e) =>
+              mealConstructor.setIngredientField("name", e.target.value)
+            }
             placeholder="Название"
             isRequired
           />
@@ -68,9 +48,12 @@ export const IngredientFormModal = observer<{
             <Input
               label="Количество"
               type="number"
-              value={ingredient.amount.toString()}
+              value={amount.toString()}
               onChange={(e) =>
-                store.setField("amount", parseFloat(e.target.value) || 0)
+                mealConstructor.setIngredientField(
+                  "amount",
+                  parseFloat(e.target.value) || 0
+                )
               }
               min={0}
               step={0.1}
@@ -78,14 +61,14 @@ export const IngredientFormModal = observer<{
               className="flex-1"
             />
             <Select
-              selectedKeys={[ingredient.unit]}
+              selectedKeys={[unit]}
               label="Ед. измерения"
               className="w-[140px]"
               variant="bordered"
               onChange={(e) => {
                 const value = e.target.value;
                 if (!value) return;
-                store.setField("unit", value as Unit);
+                mealConstructor.setIngredientField("unit", value as Unit);
               }}
             >
               {Object.entries(unitLabels).map(([unit, label]) => (
@@ -95,8 +78,10 @@ export const IngredientFormModal = observer<{
           </div>
           <Input
             label="Примечание"
-            value={ingredient.note || ""}
-            onChange={(e) => store.setField("note", e.target.value)}
+            value={note || ""}
+            onChange={(e) =>
+              mealConstructor.setIngredientField("note", e.target.value)
+            }
             placeholder="Примечание"
           />
         </ModalBody>
@@ -105,11 +90,11 @@ export const IngredientFormModal = observer<{
             Отмена
           </Button>
           <Button
-            isDisabled={store.hasError}
+            // isDisabled={store.hasError}
             color="primary"
-            onPress={confirmHandler}
+            onPress={() => mealConstructor.saveIngredient()}
           >
-            Сохранить
+            {isNewIngredient ? "Создать" : "Сохранить"}
           </Button>
         </ModalFooter>
       </ModalContent>

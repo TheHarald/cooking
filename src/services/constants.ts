@@ -1,5 +1,7 @@
 import { Unit } from "../types/types";
 
+export const newId = "new-id";
+
 export const unitLabels: Record<Unit, string> = {
   [Unit.GRAMS]: "гр",
   [Unit.KILOGRAMS]: "кг",
