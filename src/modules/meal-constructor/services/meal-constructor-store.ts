@@ -17,6 +17,10 @@ export class MealConstructorStore {
     return this.targetIngredient?.id === newId;
   }
 
+  get hasIngredients() {
+    return Boolean(this.targetRecipe?.ingredients.length);
+  }
+
   public setRecipeTab(tab: MealConstructorTabs) {
     this.recipeTab = tab;
   }
@@ -37,7 +41,7 @@ export class MealConstructorStore {
 
   public setIngredientField<K extends keyof IIngredient>(
     field: K,
-    value: IIngredient[K]
+    value: IIngredient[K],
   ) {
     if (this.targetIngredient === undefined) return;
 
@@ -62,7 +66,7 @@ export class MealConstructorStore {
     // редактирование
 
     const ingredient = this.targetRecipe.ingredients.find(
-      (ingredient) => ingredient.id === id
+      (ingredient) => ingredient.id === id,
     );
 
     if (ingredient === undefined) return;
@@ -75,7 +79,7 @@ export class MealConstructorStore {
     if (this.targetRecipe === undefined) return;
 
     this.targetRecipe.ingredients = this.targetRecipe.ingredients.filter(
-      (ingredient) => ingredient.id !== id
+      (ingredient) => ingredient.id !== id,
     );
   }
 

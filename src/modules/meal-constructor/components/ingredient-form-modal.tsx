@@ -28,7 +28,7 @@ export const IngredientFormModal = observer(() => {
   };
 
   return (
-    <Modal onClose={onCancel} isOpen>
+    <Modal placement="top" onClose={onCancel} isOpen>
       <ModalContent>
         <ModalHeader className="px-4">
           {isNewIngredient ? "Создание" : "Редактирование"}
@@ -52,7 +52,7 @@ export const IngredientFormModal = observer(() => {
               onChange={(e) =>
                 mealConstructor.setIngredientField(
                   "amount",
-                  parseFloat(e.target.value) || 0
+                  parseFloat(e.target.value) || 0,
                 )
               }
               min={0}

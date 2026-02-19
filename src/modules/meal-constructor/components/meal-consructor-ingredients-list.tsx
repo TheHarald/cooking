@@ -16,21 +16,17 @@ export const MealConstructorIngredientsList = observer(() => {
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex justify-between flex-row items-center">
-        <Button
-          variant="light"
-          color="primary"
-          isIconOnly
-          onPress={() => mealConstructor.setIngredient(defaultIngredient)}
-        >
-          <PlusCircle className="size-6" />
-        </Button>
-      </div>
-      <div className="flex flex-col gap-2">
-        {ingredients.map((ingredient) => {
-          return <IngredientCard key={ingredient.id} ingredient={ingredient} />;
-        })}
-      </div>
+      {ingredients.map((ingredient) => {
+        return <IngredientCard key={ingredient.id} ingredient={ingredient} />;
+      })}
+      <Button
+        size="lg"
+        color="primary"
+        startContent={<PlusCircle className="size-6" />}
+        onPress={() => mealConstructor.setIngredient(defaultIngredient)}
+      >
+        Добавить ингредиент
+      </Button>
     </div>
   );
 });
