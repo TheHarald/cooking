@@ -13,11 +13,14 @@ import { observer } from "mobx-react-lite";
 import { Unit } from "../../../types/types";
 import { unitLabels } from "../../../services/constants";
 import { store } from "../../../services/store";
+import { useTranslation } from "react-i18next";
 
 export const IngredientFormModal = observer(() => {
   const { mealConstructor } = store;
 
   const { targetIngredient, isNewIngredient } = mealConstructor;
+
+  const { t } = useTranslation();
 
   if (targetIngredient === undefined) return null;
 
@@ -35,12 +38,12 @@ export const IngredientFormModal = observer(() => {
         </ModalHeader>
         <ModalBody className="px-4">
           <Input
-            label="Название"
+            label={t("ingredient-name-label")}
             value={name}
             onChange={(e) =>
               mealConstructor.setIngredientField("name", e.target.value)
             }
-            placeholder="Название"
+            placeholder={t("ingredient-name-placeholder")}
             isRequired
           />
 

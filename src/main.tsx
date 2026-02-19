@@ -5,6 +5,7 @@ import { HeroUIProvider, ToastProvider } from "@heroui/react";
 //setup
 import "./modules/settings/services/settings.ts";
 import "./dayjs.ts";
+import "./i18n";
 
 // Регистрируем Service Worker
 if ("serviceWorker" in navigator) {
@@ -17,5 +18,5 @@ createRoot(document.getElementById("root")!).render(
   <HeroUIProvider className="h-full">
     <App />
     <ToastProvider />
-  </HeroUIProvider>
+  </HeroUIProvider>,
 );
