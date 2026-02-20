@@ -2,7 +2,7 @@ import type { IRecipe } from "../types/types";
 import { initDB } from "./index-db";
 
 class DatabaseStorage {
-  private async getDB() {
+  public async getDB() {
     return await initDB();
   }
 

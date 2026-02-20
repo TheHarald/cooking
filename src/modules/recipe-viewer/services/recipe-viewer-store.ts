@@ -16,8 +16,6 @@ export class RecipeViewerStore {
     try {
       const recipes = await databaseStorage.getAllRecipes();
 
-      console.log("getRecipesFromStrage", recipes);
-
       runInAction(() => {
         this.recipes = recipes;
       });

@@ -34,7 +34,7 @@ export const IngredientFormModal = observer(() => {
     <Modal placement="top" onClose={onCancel} isOpen>
       <ModalContent>
         <ModalHeader className="px-4">
-          {isNewIngredient ? "Создание" : "Редактирование"}
+          {isNewIngredient ? t("creation") : t("editing")}
         </ModalHeader>
         <ModalBody className="px-4">
           <Input
@@ -90,14 +90,13 @@ export const IngredientFormModal = observer(() => {
         </ModalBody>
         <ModalFooter className="flex justify-between px-4">
           <Button variant="flat" onPress={onCancel}>
-            Отмена
+            {t("cancel")}
           </Button>
           <Button
-            // isDisabled={store.hasError}
             color="primary"
             onPress={() => recipeConstructor.saveIngredient()}
           >
-            {isNewIngredient ? "Создать" : "Сохранить"}
+            {isNewIngredient ? t("create") : "Сохранить"}
           </Button>
         </ModalFooter>
       </ModalContent>

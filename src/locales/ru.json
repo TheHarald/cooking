@@ -1,8 +1,18 @@
 {
-  "hello-world": "Привет мир",
   "recipe-constructor-title": "Блюда",
   "ingredient-name-label": "Название ингредиента",
   "ingredient-name-placeholder": "Мука, сахар, соль...",
   "ingredients": "Ингредиенты",
-  "settings": "Настройки"
+  "settings": "Настройки",
+  "cancel": "Отмена",
+  "meal-name": "Название блюда",
+  "steps": "Шаги",
+  "create": "Создать",
+  "editing": "Редактирование",
+  "edit": "Редактировать",
+  "delete": "Удалить",
+  "clear-database": "Очистка базы данных",
+  "clear-database-message": "Вы уверены, что хотите очистить базу данных? Это действие необратимо.",
+  "confirm-clear-database-text": "Очистить",
+  "creation": "Создание"
 }

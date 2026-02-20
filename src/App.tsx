@@ -10,7 +10,7 @@ const App = observer(() => {
 
   return (
     <div className="flex flex-col h-dvh w-screen overflow-hidden">
-      <div className="flex flex-col gap-2 px-2 py-4 overflow-hidden flex-1 min-h-0">
+      <div className="flex flex-col gap-2 p-4 overflow-hidden flex-1 min-h-0">
         {(() => {
           switch (tab) {
             case AppRoutes.Settings: {

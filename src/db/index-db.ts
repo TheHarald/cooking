@@ -1,14 +1,6 @@
 // db/config.ts
 import { openDB, deleteDB } from "idb";
-import type { DBSchema } from "idb";
-import type { IRecipe } from "../types/types";
-
-export interface ICookingDB extends DBSchema {
-  recipes: {
-    value: IRecipe;
-    key: string; // предположим, что ключ - это id рецепта (строка)
-  };
-}
+import type { ICookingDB } from "./schema";
 
 const DB_NAME = "cooking-db";
 const DB_VERSION = 1;

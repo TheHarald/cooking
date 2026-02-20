@@ -94,4 +94,5 @@ export interface IRecipe {
   tags: string[];
   ingredients: IIngredient[];
   isFavorite: boolean;
+  image?: File;
 }
