@@ -3,10 +3,10 @@ import { PlusCircle } from "lucide-react";
 import { observer } from "mobx-react-lite";
 import { store } from "../../../services/store";
 
-export const MealConstructorStepsList = observer(() => {
-  const { mealConstructor } = store;
+export const RecipeConstructorStepsList = observer(() => {
+  const { recipeConstructor } = store;
 
-  const { hasIngredients } = mealConstructor;
+  const { hasIngredients } = recipeConstructor;
 
   return (
     <div className="flex flex-col gap-4">

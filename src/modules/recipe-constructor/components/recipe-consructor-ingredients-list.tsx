@@ -1,14 +1,14 @@
 import { Button } from "@heroui/react";
 import { store } from "../../../services/store";
 import { PlusCircle } from "lucide-react";
-import { defaultIngredient } from "../services/meal-constructor-constants";
+import { defaultIngredient } from "../services/recipe-constructor-constants";
 import { observer } from "mobx-react-lite";
 import { IngredientCard } from "./ingredient-card";
 
-export const MealConstructorIngredientsList = observer(() => {
-  const { mealConstructor } = store;
+export const RecipeConstructorIngredientsList = observer(() => {
+  const { recipeConstructor } = store;
 
-  const { targetRecipe } = mealConstructor;
+  const { targetRecipe } = recipeConstructor;
 
   if (targetRecipe === undefined) return null;
 
@@ -23,7 +23,7 @@ export const MealConstructorIngredientsList = observer(() => {
         size="lg"
         color="primary"
         startContent={<PlusCircle className="size-6" />}
-        onPress={() => mealConstructor.setIngredient(defaultIngredient)}
+        onPress={() => recipeConstructor.setIngredient(defaultIngredient)}
       >
         Добавить ингредиент
       </Button>

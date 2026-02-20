@@ -1,27 +1,28 @@
 import { Button, Card, CardBody } from "@heroui/react";
 import { observer } from "mobx-react-lite";
-import type { IIngredient } from "../../../types/types";
-import { getUnitLabel } from "../../../types/units";
-import { EditIcon, Trash } from "lucide-react";
+import type { IRecipe } from "../../../types/types";
 import { store } from "../../../services/store";
+import { EditIcon, EyeIcon, Trash } from "lucide-react";
 
-export const IngredientCard = observer<{
-  ingredient: IIngredient;
-}>(({ ingredient }) => {
-  const { mealConstructor } = store;
-  const { unit, name, amount, id } = ingredient;
+export const RecipeCard = observer<{
+  recipe: IRecipe;
+}>((props) => {
+  const { recipe } = props;
 
-  const unitLablel = getUnitLabel(unit);
+  const { recipeConstructor } = store;
+
+  const { title, id } = recipe;
 
   return (
     <Card>
       <CardBody className="flex flex-row gap-2 justify-between items-center">
-        <div>
-          {name},{amount} {unitLablel}
-        </div>
+        <div>{title}</div>
         <div className="flex flex-row gap-2">
+          <Button color="primary" variant="light" isIconOnly>
+            <EyeIcon className="size-6" />
+          </Button>
           <Button
-            onPress={() => mealConstructor.setIngredient(ingredient)}
+            onPress={() => recipeConstructor.setRecipe(recipe)}
             color="primary"
             variant="light"
             isIconOnly
@@ -29,7 +30,7 @@ export const IngredientCard = observer<{
             <EditIcon className="size-6" />
           </Button>
           <Button
-            onPress={() => mealConstructor.deleteIngredient(id)}
+            onPress={() => store.deleteRecipe(id)}
             color="danger"
             variant="light"
             isIconOnly

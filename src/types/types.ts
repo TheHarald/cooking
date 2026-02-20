@@ -8,7 +8,7 @@ export enum Difficulty {
   HARD = "hard",
 }
 
-export enum MealType {
+export enum RcipeType {
   BREAKFAST = "breakfast",
   LUNCH = "lunch",
   DINNER = "dinner",
@@ -85,15 +85,6 @@ export interface ICookingStep {
   duration?: number;
   imageUrl?: string;
   timerEnabled?: boolean;
-}
-
-export interface INutritionInfo {
-  calories?: number;
-  protein?: number;
-  carbs?: number;
-  fat?: number;
-  fiber?: number;
-  sugar?: number;
 }
 
 export interface IRecipe {

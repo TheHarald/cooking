@@ -11,22 +11,22 @@ import {
 } from "@heroui/react";
 import { observer } from "mobx-react-lite";
 import { store } from "../../../services/store";
-import { MealConstructorTabs } from "../services/meal-constructor-constants";
-import { MealConstructorIngredientsList } from "./meal-consructor-ingredients-list";
-import { MealConstructorStepsList } from "./meal-constructor-steps-list";
+import { RecipeConstructorTabs } from "../services/recipe-constructor-constants";
+import { RecipeConstructorIngredientsList } from "./recipe-consructor-ingredients-list";
+import { RecipeConstructorStepsList } from "./recipe-constructor-steps-list";
 import { newId } from "../../../services/constants";
 
 export const RecipeFormModal = observer(() => {
-  const { mealConstructor } = store;
+  const { recipeConstructor } = store;
 
-  const { targetRecipe, recipeTab } = mealConstructor;
+  const { targetRecipe, recipeTab } = recipeConstructor;
 
   if (targetRecipe === undefined) return null;
 
   const { title, id } = targetRecipe;
 
   const onCancel = () => {
-    mealConstructor.setRecipe(undefined);
+    recipeConstructor.setRecipe(undefined);
   };
 
   return (
@@ -40,27 +40,27 @@ export const RecipeFormModal = observer(() => {
             placeholder="Название блюда"
             value={title}
             onChange={(e) =>
-              mealConstructor.setRecipeField("title", e.target.value)
+              recipeConstructor.setRecipeField("title", e.target.value)
             }
           />
           <Tabs
             className="self-center"
             onSelectionChange={(key) =>
-              mealConstructor.setRecipeTab(key as MealConstructorTabs)
+              recipeConstructor.setRecipeTab(key as RecipeConstructorTabs)
             }
             selectedKey={recipeTab}
           >
-            <Tab key={MealConstructorTabs.Ingredients} title="Ингредиенты">
-              <MealConstructorIngredientsList />
+            <Tab key={RecipeConstructorTabs.Ingredients} title="Ингредиенты">
+              <RecipeConstructorIngredientsList />
             </Tab>
-            <Tab key={MealConstructorTabs.Steps} title="Шаги">
-              <MealConstructorStepsList />
+            <Tab key={RecipeConstructorTabs.Steps} title="Шаги">
+              <RecipeConstructorStepsList />
             </Tab>
           </Tabs>
         </ModalBody>
         <ModalFooter className="px-4 flex flex-row justify-between">
           <Button onPress={onCancel}>Отмена</Button>
-          <Button color="primary" onPress={() => mealConstructor.saveRecipe()}>
+          <Button color="primary" onPress={() => store.saveRecipe()}>
             Сохранить
           </Button>
         </ModalFooter>

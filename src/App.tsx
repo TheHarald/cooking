@@ -3,7 +3,7 @@ import { NavigationMenu } from "./modules/navigation/components/navigation-menu"
 import { navigationStore } from "./modules/navigation/services/navigation-store";
 import { AppRoutes } from "./modules/navigation/services/types";
 import { SettingsModule } from "./modules/settings";
-import { CookingConstructor } from "./modules/meal-constructor";
+import { CookingConstructor } from "./modules/recipe-constructor";
 
 const App = observer(() => {
   const { tab } = navigationStore;

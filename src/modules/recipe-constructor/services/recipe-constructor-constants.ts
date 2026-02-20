@@ -17,7 +17,7 @@ export const defaultIngredient: IIngredient = {
   note: "",
 };
 
-export enum MealConstructorTabs {
+export enum RecipeConstructorTabs {
   Ingredients = "ingredients",
   Steps = "steps",
 }

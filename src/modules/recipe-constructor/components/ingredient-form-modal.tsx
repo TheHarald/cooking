@@ -16,9 +16,9 @@ import { store } from "../../../services/store";
 import { useTranslation } from "react-i18next";
 
 export const IngredientFormModal = observer(() => {
-  const { mealConstructor } = store;
+  const { recipeConstructor } = store;
 
-  const { targetIngredient, isNewIngredient } = mealConstructor;
+  const { targetIngredient, isNewIngredient } = recipeConstructor;
 
   const { t } = useTranslation();
 
@@ -27,7 +27,7 @@ export const IngredientFormModal = observer(() => {
   const { name, amount, unit, note } = targetIngredient;
 
   const onCancel = () => {
-    mealConstructor.setIngredient(undefined);
+    recipeConstructor.setIngredient(undefined);
   };
 
   return (
@@ -41,7 +41,7 @@ export const IngredientFormModal = observer(() => {
             label={t("ingredient-name-label")}
             value={name}
             onChange={(e) =>
-              mealConstructor.setIngredientField("name", e.target.value)
+              recipeConstructor.setIngredientField("name", e.target.value)
             }
             placeholder={t("ingredient-name-placeholder")}
             isRequired
@@ -53,7 +53,7 @@ export const IngredientFormModal = observer(() => {
               type="number"
               value={amount.toString()}
               onChange={(e) =>
-                mealConstructor.setIngredientField(
+                recipeConstructor.setIngredientField(
                   "amount",
                   parseFloat(e.target.value) || 0,
                 )
@@ -71,7 +71,7 @@ export const IngredientFormModal = observer(() => {
               onChange={(e) => {
                 const value = e.target.value;
                 if (!value) return;
-                mealConstructor.setIngredientField("unit", value as Unit);
+                recipeConstructor.setIngredientField("unit", value as Unit);
               }}
             >
               {Object.entries(unitLabels).map(([unit, label]) => (
@@ -83,7 +83,7 @@ export const IngredientFormModal = observer(() => {
             label="Примечание"
             value={note || ""}
             onChange={(e) =>
-              mealConstructor.setIngredientField("note", e.target.value)
+              recipeConstructor.setIngredientField("note", e.target.value)
             }
             placeholder="Примечание"
           />
@@ -95,7 +95,7 @@ export const IngredientFormModal = observer(() => {
           <Button
             // isDisabled={store.hasError}
             color="primary"
-            onPress={() => mealConstructor.saveIngredient()}
+            onPress={() => recipeConstructor.saveIngredient()}
           >
             {isNewIngredient ? "Создать" : "Сохранить"}
           </Button>

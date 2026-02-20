@@ -1,13 +1,12 @@
 import { makeAutoObservable, toJS } from "mobx";
 import type { IIngredient, IRecipe } from "../../../types/types";
 import { newId } from "../../../services/constants";
-import { MealConstructorTabs } from "./meal-constructor-constants";
+import { RecipeConstructorTabs } from "./recipe-constructor-constants";
 
-export class MealConstructorStore {
-  recipes: IRecipe[] = [];
+export class RecipeConstructorStore {
   targetRecipe: IRecipe | undefined = undefined;
   targetIngredient: IIngredient | undefined = undefined;
-  recipeTab: MealConstructorTabs = MealConstructorTabs.Ingredients;
+  recipeTab: RecipeConstructorTabs = RecipeConstructorTabs.Ingredients;
 
   constructor() {
     makeAutoObservable(this);
@@ -21,7 +20,7 @@ export class MealConstructorStore {
     return Boolean(this.targetRecipe?.ingredients.length);
   }
 
-  public setRecipeTab(tab: MealConstructorTabs) {
+  public setRecipeTab(tab: RecipeConstructorTabs) {
     this.recipeTab = tab;
   }
 
@@ -81,33 +80,5 @@ export class MealConstructorStore {
     this.targetRecipe.ingredients = this.targetRecipe.ingredients.filter(
       (ingredient) => ingredient.id !== id,
     );
-  }
-
-  public deleteRecipe(id: string) {
-    this.recipes = this.recipes.filter((recipe) => recipe.id !== id);
-  }
-
-  public saveRecipe() {
-    if (this.targetRecipe === undefined) return;
-
-    const id = this.targetRecipe.id;
-
-    // добавление
-    if (this.targetRecipe.id === newId) {
-      this.targetRecipe.id = crypto.randomUUID();
-      this.recipes.push(this.targetRecipe);
-      this.targetRecipe = undefined;
-
-      return;
-    }
-
-    // редактирование
-
-    const recipe = this.recipes.find((recipe) => recipe.id === id);
-
-    if (recipe === undefined) return;
-
-    Object.assign(recipe, this.targetRecipe);
-    this.targetRecipe = undefined;
   }
 }
