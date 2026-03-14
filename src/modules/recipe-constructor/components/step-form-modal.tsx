@@ -20,7 +20,7 @@ export const StepFormModal = observer(() => {
   const { targetRecipe, targetStep, isNewStep } = recipeConstructor;
   const { t } = useTranslation();
 
-  if (targetStep === undefined || targetRecipe === undefined) return null;
+  if (targetStep === undefined || targetRecipe === undefined) return undefined;
 
   const { description, duration, ingredientIds = [], id: currentStepId } = targetStep;
   const ingredients = targetRecipe.ingredients;
@@ -61,7 +61,7 @@ export const StepFormModal = observer(() => {
             type="number"
             min={0}
             step={1}
-            value={duration != null ? String(duration) : ""}
+            value={duration !== undefined ? String(duration) : ""}
             onChange={(e) => {
               const v = e.target.value;
               recipeConstructor.setStepField(

@@ -74,7 +74,7 @@ export const MealPlanDay = observer(() => {
                 <div className="flex flex-wrap gap-2 items-center">
                   {recipeIds.map((id) => {
                     const recipe = recipes.find((r) => r.id === id);
-                    if (!recipe) return null;
+                    if (!recipe) return undefined;
                     return (
                       <Chip
                         key={`${day}-${mealType}-${id}`}

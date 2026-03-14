@@ -26,7 +26,7 @@ export const RecipeFormModal = observer(() => {
 
   const { t } = useTranslation();
 
-  if (targetRecipe === undefined) return null;
+  if (targetRecipe === undefined) return undefined;
 
   const { title, id, image } = targetRecipe;
 

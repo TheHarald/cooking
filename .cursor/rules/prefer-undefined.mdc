@@ -1,0 +1,32 @@
+---
+description: Use undefined for absent values; avoid null
+globs: **/*.ts,**/*.tsx
+alwaysApply: false
+---
+
+# Предпочитать undefined вместо null
+
+В проекте для обозначения «отсутствующего» значения используй только **undefined**, не **null**.
+
+- Типы: `value: T | undefined`, не `T | null`.
+- Инициализация: `= undefined`, не `= null`.
+- Проверки: `x === undefined`, не `x == null` или `x === null`.
+- Опциональные поля уже подразумевают undefined: `field?: T` достаточно, без `| null`.
+
+Исключение: если значение приходит из внешнего API или DOM, где контракт явно использует null (например, часть браузерного API), можно оставить null только на границе.
+
+```typescript
+// ✅ GOOD
+plan: IMealPlan | undefined = undefined;
+image?: File;
+if (recipe === undefined) return undefined;
+.filter((x): x is T => x !== undefined);
+
+// ❌ BAD
+plan: IMealPlan | null = null;
+image?: File | null;
+if (recipe == null) return null;
+.filter((x): x is T => x != null);
+```
+
+В React для «ничего не рендерить» можно возвращать как `undefined`, так и `null` — оба дают пустой вывод; в проекте используем **undefined**.

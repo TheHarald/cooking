@@ -34,7 +34,7 @@ function dateToDayOfWeek(date: dayjs.Dayjs): DayOfWeek {
 }
 
 export class MealPlanStore {
-  plan: IMealPlan | null = null;
+  plan: IMealPlan | undefined = undefined;
   /** Текущая выбранная дата (отображаемый день) */
   currentDate: string = dayjs().format("YYYY-MM-DD");
 
@@ -55,13 +55,15 @@ export class MealPlanStore {
     return dateToDayOfWeek(dayjs(this.currentDate));
   }
 
-  getRecipeIdsForDayAndMeal(day: DayOfWeek, mealType: MealType): string[] {
-    return this.plan?.plan?.[day]?.[mealType] ?? [];
-  }
+  getRecipeIdsForDayAndMeal = (day: DayOfWeek, mealType: MealType): string[] => {
+    if (!this.plan?.plan) return [];
+    return this.plan.plan[day]?.[mealType] ?? [];
+  };
 
   /** Все id рецептов за день (все приёмы пищи) — для списка покупок */
-  getRecipeIdsForDay(day: DayOfWeek): string[] {
-    const byDay = this.plan?.plan?.[day];
+  getRecipeIdsForDay = (day: DayOfWeek): string[] => {
+    if (!this.plan?.plan) return [];
+    const byDay = this.plan.plan[day];
     if (!byDay) return [];
     const ids: string[] = [];
     for (const mealType of mealTypeOrder) {
@@ -69,27 +71,27 @@ export class MealPlanStore {
       if (Array.isArray(list)) ids.push(...list);
     }
     return ids;
-  }
+  };
 
-  setCurrentDate(date: string) {
+  setCurrentDate = (date: string) => {
     this.currentDate = date;
     const weekStart = getWeekStart(dayjs(date));
     if (weekStart !== this.plan?.weekStart) {
       this.loadPlan();
     }
-  }
+  };
 
-  goToPrevDay() {
+  goToPrevDay = () => {
     const d = dayjs(this.currentDate).subtract(1, "day");
     this.setCurrentDate(d.format("YYYY-MM-DD"));
-  }
+  };
 
-  goToNextDay() {
+  goToNextDay = () => {
     const d = dayjs(this.currentDate).add(1, "day");
     this.setCurrentDate(d.format("YYYY-MM-DD"));
-  }
+  };
 
-  async loadPlan() {
+  loadPlan = async () => {
     const weekStart = getWeekStart(dayjs(this.currentDate));
     try {
       const plan = await databaseStorage.getMealPlan(weekStart);
@@ -101,7 +103,7 @@ export class MealPlanStore {
         this.plan = { weekStart, plan: {} };
       });
     }
-  }
+  };
 
   private getOrCreatePlan(): IMealPlan {
     const weekStart = getWeekStart(dayjs(this.currentDate));
@@ -111,7 +113,7 @@ export class MealPlanStore {
     return this.plan;
   }
 
-  async addRecipeToDay(day: DayOfWeek, recipeId: string, mealType: MealType) {
+  addRecipeToDay = async (day: DayOfWeek, recipeId: string, mealType: MealType) => {
     const weekStart = getWeekStart(dayjs(this.currentDate));
     if (!this.plan || this.plan.weekStart !== weekStart) {
       await this.loadPlan();
@@ -123,9 +125,9 @@ export class MealPlanStore {
     plan.plan[day] = { ...byDay, [mealType]: [...list, recipeId] };
     this.plan = { ...plan };
     await databaseStorage.putMealPlan(this.plan);
-  }
+  };
 
-  async removeRecipeFromDay(day: DayOfWeek, recipeId: string, mealType: MealType) {
+  removeRecipeFromDay = async (day: DayOfWeek, recipeId: string, mealType: MealType) => {
     if (!this.plan) return;
     const byDay = this.plan.plan[day];
     if (!byDay) return;
@@ -143,7 +145,7 @@ export class MealPlanStore {
       this.plan = { ...this.plan, plan: { ...this.plan.plan, [day]: newByDay } };
     }
     await databaseStorage.putMealPlan(this.plan);
-  }
+  };
 }
 
 export const mealPlanStore = new MealPlanStore();

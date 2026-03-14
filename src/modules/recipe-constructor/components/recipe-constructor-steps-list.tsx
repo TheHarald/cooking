@@ -12,7 +12,7 @@ export const RecipeConstructorStepsList = observer(() => {
 
   const { targetRecipe, hasIngredients, steps } = recipeConstructor;
 
-  if (targetRecipe === undefined) return null;
+  if (targetRecipe === undefined) return undefined;
 
   const { ingredients } = targetRecipe;
 

@@ -6,9 +6,9 @@ type MealImageVariant = "card" | "large";
 
 type MealImageProps = {
   /** Файл изображения — компонент сам создаёт object URL и освобождает при размонтировании */
-  image?: File | null;
+  image?: File;
   /** Готовый URL (используется, если не передан image) */
-  src?: string | null;
+  src?: string;
   alt?: string;
   variant?: MealImageVariant;
   className?: string;

@@ -22,7 +22,7 @@ export const IngredientFormModal = observer(() => {
 
   const { t } = useTranslation();
 
-  if (targetIngredient === undefined) return null;
+  if (targetIngredient === undefined) return undefined;
 
   const { name, amount, unit, note } = targetIngredient;
 

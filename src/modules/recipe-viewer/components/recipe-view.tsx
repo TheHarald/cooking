@@ -37,7 +37,7 @@ function StepRow({
   const { order, description, duration, ingredientIds = [] } = step;
   const stepIngredients = ingredientIds
     .map((id) => ingredients.find((i) => i.id === id))
-    .filter((ing): ing is IIngredient => ing != null);
+    .filter((ing): ing is IIngredient => ing !== undefined);
 
   return (
     <li className="flex gap-3 py-3 border-b border-default-100 last:border-0">
@@ -53,7 +53,7 @@ function StepRow({
             ))}
           </ul>
         )}
-        {duration != null && duration > 0 && (
+        {duration !== undefined && duration > 0 && (
           <p className="text-sm text-default-500 mt-0.5">
             {t("recipe-duration-min", { count: duration })}
           </p>

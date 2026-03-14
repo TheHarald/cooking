@@ -24,7 +24,7 @@ export const StepCard = observer<{
 
   const stepIngredients = ingredientIds
     .map((id) => ingredients.find((i) => i.id === id))
-    .filter((ing): ing is IIngredient => ing != null);
+    .filter((ing): ing is IIngredient => ing !== undefined);
 
   return (
     <Card shadow="sm">
@@ -41,7 +41,7 @@ export const StepCard = observer<{
               ))}
             </ul>
           )}
-          {duration != null && duration > 0 && (
+          {duration !== undefined && duration > 0 && (
             <p className="text-default-400 text-xs mt-0.5">
               {t("recipe-duration-min", { count: duration })}
             </p>

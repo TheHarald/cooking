@@ -13,7 +13,7 @@ export const RecipeViewModal = observer(() => {
   const { recipeViwer } = store;
   const { viewingRecipe } = recipeViwer;
 
-  if (viewingRecipe == null) return null;
+  if (viewingRecipe === undefined) return undefined;
 
   const onClose = () => recipeViwer.setViewingRecipe(undefined);
 
