@@ -88,7 +88,7 @@ export const IngredientFormModal = observer(() => {
             placeholder="Примечание"
           />
         </ModalBody>
-        <ModalFooter className="flex justify-between px-4">
+        <ModalFooter className="flex justify-between px-4 safe-area-bottom">
           <Button variant="flat" onPress={onCancel}>
             {t("cancel")}
           </Button>

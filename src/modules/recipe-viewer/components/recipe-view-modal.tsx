@@ -25,7 +25,7 @@ export const RecipeViewModal = observer(() => {
         </ModalHeader>
         <ModalBody className="p-4 overflow-hidden flex-1 min-h-0">
           <ScrollShadow className="h-full max-h-full overflow-y-auto" hideScrollBar>
-            <div className="pb-4">
+            <div className="pb-4 scroll-safe-bottom">
               <RecipeView recipe={viewingRecipe} />
             </div>
           </ScrollShadow>
