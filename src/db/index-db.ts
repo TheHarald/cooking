@@ -3,7 +3,7 @@ import { openDB, deleteDB } from "idb";
 import type { ICookingDB } from "./schema";
 
 const dbName = "cooking-db";
-const dbVersion = 2;
+const dbVersion = 3;
 
 export async function initDB() {
   const db = await openDB<ICookingDB>(dbName, dbVersion, {

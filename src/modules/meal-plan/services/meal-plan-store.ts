@@ -107,14 +107,17 @@ export class MealPlanStore {
     }
     const plan = this.getOrCreatePlan();
     const list = this._getDayEntries(day);
-    plan.plan[day] = [...list, { recipeId, label: label?.trim() || undefined }];
+    plan.plan[day] = [
+      ...list,
+      { id: crypto.randomUUID(), recipeId, label: label?.trim() || undefined },
+    ];
     this.plan = { ...plan };
     await databaseStorage.putMealPlan(toJS(this.plan));
   }
 
-  async removeDishFromDay(day: DayOfWeek, index: number) {
+  async removeDishFromDay(day: DayOfWeek, entryId: string) {
     if (!this.plan?.plan) return;
-    const list = this._getDayEntries(day).filter((_, i) => i !== index);
+    const list = this._getDayEntries(day).filter((e) => e.id !== entryId);
     if (list.length === 0) {
       const { [day]: _, ...rest } = this.plan.plan;
       this.plan = { ...this.plan, plan: rest };
@@ -124,11 +127,11 @@ export class MealPlanStore {
     await databaseStorage.putMealPlan(toJS(this.plan));
   }
 
-  async updateDishLabel(day: DayOfWeek, index: number, label: string) {
+  async updateDishLabel(day: DayOfWeek, entryId: string, label: string) {
     if (!this.plan?.plan) return;
-    const list = [...this._getDayEntries(day)];
-    if (index < 0 || index >= list.length) return;
-    list[index] = { ...list[index], label: label.trim() || undefined };
+    const list = this._getDayEntries(day).map((e) =>
+      e.id === entryId ? { ...e, label: label.trim() || undefined } : e
+    );
     this.plan = { ...this.plan, plan: { ...this.plan.plan, [day]: list } };
     await databaseStorage.putMealPlan(toJS(this.plan));
   }

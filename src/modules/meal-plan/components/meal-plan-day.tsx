@@ -31,16 +31,15 @@ const mealTypeOptions: ("" | MealType)[] = [
 
 type DishRowProps = {
   day: DayOfWeek;
-  index: number;
   entry: IMealPlanEntry;
   recipe: IRecipe;
   onViewRecipe: (recipeId: string) => void;
-  onRemove: (day: DayOfWeek, index: number) => void;
-  onLabelChange: (day: DayOfWeek, index: number, value: string) => void;
+  onRemove: (day: DayOfWeek, entryId: string) => void;
+  onLabelChange: (day: DayOfWeek, entryId: string, value: string) => void;
 };
 
 const DishRow = observer(
-  ({ day, index, entry, recipe, onViewRecipe, onRemove, onLabelChange }: DishRowProps) => {
+  ({ day, entry, recipe, onViewRecipe, onRemove, onLabelChange }: DishRowProps) => {
     const { t } = useTranslation();
     const selectedKey = entry.label ?? "";
 
@@ -52,7 +51,7 @@ const DishRow = observer(
             selectedKeys={[selectedKey]}
             onSelectionChange={(keys) => {
               const key = Array.from(keys)[0] as string | undefined;
-              onLabelChange(day, index, key ?? "");
+              onLabelChange(day, entry.id, key ?? "");
             }}
             placeholder={t("meal-plan-label-none")}
             className="min-w-0 flex-1"
@@ -72,7 +71,7 @@ const DishRow = observer(
             size="sm"
             variant="light"
             color="danger"
-            onPress={() => onRemove(day, index)}
+            onPress={() => onRemove(day, entry.id)}
             aria-label={t("delete")}
             className="shrink-0"
           >
@@ -145,20 +144,19 @@ export const MealPlanDay = observer(() => {
             </p>
           ) : (
             <ul className="flex flex-col gap-2">
-              {dishes.map((entry, index) => {
+              {dishes.map((entry) => {
                 const recipe = recipes.find((r) => r.id === entry.recipeId);
                 if (!recipe) return undefined;
                 return (
                   <DishRow
-                    key={`${day}-${index}-${entry.recipeId}`}
+                    key={entry.id}
                     day={day}
-                    index={index}
                     entry={entry}
                     recipe={recipe}
                     onViewRecipe={handleViewRecipe}
-                    onRemove={(d, i) => mealPlanStore.removeDishFromDay(d, i)}
-                    onLabelChange={(d, i, v) =>
-                      mealPlanStore.updateDishLabel(d, i, v)
+                    onRemove={(d, id) => mealPlanStore.removeDishFromDay(d, id)}
+                    onLabelChange={(d, id, v) =>
+                      mealPlanStore.updateDishLabel(d, id, v)
                     }
                   />
                 );

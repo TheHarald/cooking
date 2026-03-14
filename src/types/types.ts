@@ -110,6 +110,7 @@ export interface IRecipe {
 
 /** Одно блюдо в рационе дня: рецепт и необязательный лейбл (завтрак, ужин и т.д.) */
 export interface IMealPlanEntry {
+  id: string;
   recipeId: string;
   label?: string;
 }
