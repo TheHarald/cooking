@@ -1,0 +1,30 @@
+---
+description: Store methods use method syntax, not arrow class fields
+globs: **/*store*.ts
+alwaysApply: false
+---
+
+# Методы стора: синтаксис метода
+
+В классах стора (MobX и др.) объявляй методы через **синтаксис метода**, а не через присвоение функции в свойство класса.
+
+```typescript
+// ✅ GOOD
+class MealPlanStore {
+  addDishToDay(day: DayOfWeek, recipeId: string, label?: string) {
+    // ...
+  }
+  removeDishFromDay(day: DayOfWeek, index: number) {
+    // ...
+  }
+}
+
+// ❌ BAD — присвоение стрелочной функции в свойство
+class MealPlanStore {
+  addDishToDay = async (day: DayOfWeek, recipeId: string, label?: string) => {
+    // ...
+  };
+}
+```
+
+При вызове методов из компонентов (в т.ч. после деструктуризации) сохраняй контекст: вызывай как `store.method(...)` или передавай обёртку `() => store.method(...)`, при необходимости используй `store.method.bind(store)`.

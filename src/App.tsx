@@ -6,6 +6,7 @@ import { SettingsModule } from "./modules/settings";
 import { CookingConstructor } from "./modules/recipe-constructor";
 import { MealPlanModule } from "./modules/meal-plan";
 import { ShoppingListModule } from "./modules/shopping-list";
+import { RecipeViewModal } from "./modules/recipe-viewer/components/recipe-view-modal";
 
 const App = observer(() => {
   const { tab } = navigationStore;
@@ -29,6 +30,7 @@ const App = observer(() => {
         })()}
       </div>
       <NavigationMenu />
+      <RecipeViewModal />
     </div>
   );
 });

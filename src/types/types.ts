@@ -108,10 +108,16 @@ export interface IRecipe {
   image?: File;
 }
 
-// Рацион: день недели → приём пищи → массив id рецептов
+/** Одно блюдо в рационе дня: рецепт и необязательный лейбл (завтрак, ужин и т.д.) */
+export interface IMealPlanEntry {
+  recipeId: string;
+  label?: string;
+}
+
+// Рацион: день недели → массив блюд (рецепт + опциональный лейбл)
 export interface IMealPlan {
   weekStart: string; // ISO date (YYYY-MM-DD) понедельника
-  plan: Partial<Record<DayOfWeek, Partial<Record<MealType, string[]>>>>;
+  plan: Partial<Record<DayOfWeek, IMealPlanEntry[]>>;
 }
 
 // Элемент списка покупок (агрегация ингредиентов из рецептов недели)

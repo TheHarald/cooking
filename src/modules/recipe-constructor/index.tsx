@@ -6,7 +6,6 @@ import { AddRecipeButton } from "./components/add-recipe-button";
 import { IngredientFormModal } from "./components/ingredient-form-modal";
 import { RecipeCard } from "../recipe-viewer/components/recipe-card";
 import { RecipeFormModal } from "./components/recipe-form-modal";
-import { RecipeViewModal } from "../recipe-viewer/components/recipe-view-modal";
 import { StepFormModal } from "./components/step-form-modal";
 import { useTranslation } from "react-i18next";
 
@@ -45,7 +44,6 @@ export const CookingConstructor = observer(() => {
       <IngredientFormModal />
       <StepFormModal />
       <RecipeFormModal />
-      <RecipeViewModal />
     </>
   );
 });

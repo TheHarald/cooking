@@ -1,0 +1,23 @@
+---
+description: Store private methods and properties start with underscore _
+globs: **/*store*.ts
+alwaysApply: false
+---
+
+# Стор: приватные методы и свойства — префикс _
+
+В классах стора (MobX и др.) приватные **методы** и **свойства**, которые не входят в публичный API, именуй с **префикса _** (один underscore). Префикс _ относится только к методам и свойствам стора, не к функциям уровня модуля.
+
+```typescript
+// ✅ GOOD — приватный метод стора
+class MealPlanStore {
+  private _getDayEntries(day: DayOfWeek): IMealPlanEntry[] {
+    return this.plan?.plan?.[day] ?? [];
+  }
+}
+
+// ❌ BAD — приватная логика без префикса (если хочешь подчеркнуть «внутреннее»)
+private getDayEntries(day: DayOfWeek) { ... }
+```
+
+Методы и свойства с _ не экспортируются и не используются снаружи стора.
