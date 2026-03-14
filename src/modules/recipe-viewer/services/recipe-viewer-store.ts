@@ -25,6 +25,18 @@ export class RecipeViewerStore {
     });
   }
 
+  /** Уникальные названия ингредиентов из всех рецептов — для автокомплита */
+  get ingredientNames(): string[] {
+    const set = new Set<string>();
+    for (const recipe of this.recipes) {
+      for (const ing of recipe.ingredients ?? []) {
+        const n = ing.name?.trim();
+        if (n) set.add(n);
+      }
+    }
+    return Array.from(set).sort((a, b) => a.localeCompare(b, "ru"));
+  }
+
   setViewingRecipe(recipe: IRecipe | undefined) {
     this.viewingRecipe = recipe;
   }

@@ -14,12 +14,12 @@ import { Unit } from "../../../types/types";
 import { unitLabels } from "../../../services/constants";
 import { store } from "../../../services/store";
 import { useTranslation } from "react-i18next";
+import { AutocompleteInput } from "../../../components/autocomplete-input";
 
 export const IngredientFormModal = observer(() => {
-  const { recipeConstructor } = store;
-
+  const { recipeConstructor, recipeViwer } = store;
+  const { ingredientNames } = recipeViwer;
   const { targetIngredient, isNewIngredient } = recipeConstructor;
-
   const { t } = useTranslation();
 
   if (targetIngredient === undefined) return undefined;
@@ -37,13 +37,14 @@ export const IngredientFormModal = observer(() => {
           {isNewIngredient ? t("creation") : t("editing")}
         </ModalHeader>
         <ModalBody className="px-4">
-          <Input
+          <AutocompleteInput
             label={t("ingredient-name-label")}
             value={name}
-            onChange={(e) =>
-              recipeConstructor.setIngredientField("name", e.target.value)
+            onChange={(value) =>
+              recipeConstructor.setIngredientField("name", value)
             }
             placeholder={t("ingredient-name-placeholder")}
+            options={ingredientNames}
             isRequired
           />
 
@@ -95,6 +96,7 @@ export const IngredientFormModal = observer(() => {
           <Button
             color="primary"
             onPress={() => recipeConstructor.saveIngredient()}
+            isDisabled={!name.trim()}
           >
             {isNewIngredient ? t("create") : "Сохранить"}
           </Button>
