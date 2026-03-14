@@ -13,7 +13,7 @@ export const defaultRecipe: IRecipe = {
 export const defaultIngredient: IIngredient = {
   id: newId,
   name: "",
-  unit: Unit.GRAMS,
+  unit: Unit.Grams,
   amount: 100,
   note: "",
 };

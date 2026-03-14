@@ -3,68 +3,76 @@
 // ================================
 
 export enum Difficulty {
-  EASY = "easy",
-  MEDIUM = "medium",
-  HARD = "hard",
+  Easy = "easy",
+  Medium = "medium",
+  Hard = "hard",
 }
 
 export enum RcipeType {
-  BREAKFAST = "breakfast",
-  LUNCH = "lunch",
-  DINNER = "dinner",
-  SNACK = "snack",
-  DESSERT = "dessert",
+  Breakfast = "breakfast",
+  Lunch = "lunch",
+  Dinner = "dinner",
+  Snack = "snack",
+  Dessert = "dessert",
 }
 
 export enum Category {
-  BREAKFAST = "breakfast",
-  LUNCH = "lunch",
-  DINNER = "dinner",
-  DESSERT = "dessert",
-  APPETIZER = "appetizer",
-  SALAD = "salad",
-  MAIN_COURSE = "main_course",
-  SOUP = "soup",
-  BAKING = "baking",
-  DRINK = "drink",
-  SAUCE = "sauce",
-  SIDE_DISH = "side_dish",
+  Breakfast = "breakfast",
+  Lunch = "lunch",
+  Dinner = "dinner",
+  Dessert = "dessert",
+  Appetizer = "appetizer",
+  Salad = "salad",
+  MainCourse = "main_course",
+  Soup = "soup",
+  Baking = "baking",
+  Drink = "drink",
+  Sauce = "sauce",
+  SideDish = "side_dish",
 }
 
 export enum DayOfWeek {
-  MONDAY = "monday",
-  TUESDAY = "tuesday",
-  WEDNESDAY = "wednesday",
-  THURSDAY = "thursday",
-  FRIDAY = "friday",
-  SATURDAY = "saturday",
-  SUNDAY = "sunday",
+  Monday = "monday",
+  Tuesday = "tuesday",
+  Wednesday = "wednesday",
+  Thursday = "thursday",
+  Friday = "friday",
+  Saturday = "saturday",
+  Sunday = "sunday",
+}
+
+/** Приём пищи для распределения блюд в рационе */
+export enum MealType {
+  Breakfast = "breakfast",
+  Lunch = "lunch",
+  Dinner = "dinner",
+  Snack = "snack",
 }
 
 export enum Unit {
   // Weight
-  GRAMS = "g",
-  KILOGRAMS = "kg",
-  MILLIGRAMS = "mg",
+  Grams = "g",
+  Kilograms = "kg",
+  Milligrams = "mg",
 
   // Volume
-  MILLILITERS = "ml",
-  LITERS = "l",
-  TEASPOON = "tsp",
-  TABLESPOON = "tbsp",
-  CUP = "cup",
+  Milliliters = "ml",
+  Liters = "l",
+  Teaspoon = "tsp",
+  Tablespoon = "tbsp",
+  Cup = "cup",
 
   // Count
-  PIECES = "pcs",
-  BUNCH = "bunch",
-  CLOVE = "clove",
-  STALK = "stalk",
+  Pieces = "pcs",
+  Bunch = "bunch",
+  Clove = "clove",
+  Stalk = "stalk",
 
   // Other
-  PINCH = "pinch",
-  TO_TASTE = "to_taste",
-  SERVING = "serving",
-  PACKAGE = "package",
+  Pinch = "pinch",
+  ToTaste = "to_taste",
+  Serving = "serving",
+  Package = "package",
 }
 
 // ================================
@@ -100,10 +108,10 @@ export interface IRecipe {
   image?: File;
 }
 
-// Рацион на неделю: день → массив id рецептов
+// Рацион: день недели → приём пищи → массив id рецептов
 export interface IMealPlan {
   weekStart: string; // ISO date (YYYY-MM-DD) понедельника
-  plan: Partial<Record<DayOfWeek, string[]>>;
+  plan: Partial<Record<DayOfWeek, Partial<Record<MealType, string[]>>>>;
 }
 
 // Элемент списка покупок (агрегация ингредиентов из рецептов недели)

@@ -1,0 +1,33 @@
+---
+description: Enum members must use PascalCase
+globs: **/*.ts
+alwaysApply: false
+---
+
+# Enum naming: PascalCase
+
+Имена членов enum пиши в **PascalCase**.
+
+- Имя самого enum — PascalCase: `DayOfWeek`, `MealType`, `Unit`.
+- Члены enum — тоже PascalCase: `Monday`, `Breakfast`, `Grams`.
+
+Значения (строки для строковых enum) можно оставлять в lowercase/snake_case для совместимости с API и БД.
+
+```typescript
+// ✅ GOOD
+export enum DayOfWeek {
+  Monday = "monday",
+  Tuesday = "tuesday",
+}
+
+export enum MealType {
+  Breakfast = "breakfast",
+  Lunch = "lunch",
+}
+
+// ❌ BAD — UPPER_SNAKE_CASE для членов
+export enum DayOfWeek {
+  MONDAY = "monday",
+  TUESDAY = "tuesday",
+}
+```

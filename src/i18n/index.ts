@@ -4,23 +4,23 @@ import enTranslation from "../locales/en.json";
 import ruTranslation from "../locales/ru.json";
 
 export enum Languages {
-  EN = "en",
-  RU = "ru",
+  En = "en",
+  Ru = "ru",
 }
 
 const resources = {
-  [Languages.EN]: {
+  [Languages.En]: {
     translation: enTranslation,
   },
-  [Languages.RU]: {
+  [Languages.Ru]: {
     translation: ruTranslation,
   },
 } as const;
 
 i18n.use(initReactI18next).init({
   resources,
-  lng: Languages.RU,
-  fallbackLng: Languages.RU,
+  lng: Languages.Ru,
+  fallbackLng: Languages.Ru,
   interpolation: {
     escapeValue: false,
   },

@@ -4,8 +4,8 @@ import { Languages } from "../../../i18n";
 import { useTranslation } from "react-i18next";
 
 const languages = [
-  { value: Languages.RU, title: "Русский" },
-  { value: Languages.EN, title: "English" },
+  { value: Languages.Ru, title: "Русский" },
+  { value: Languages.En, title: "English" },
 ];
 
 export const LanguageSelector = observer(() => {

@@ -1,0 +1,24 @@
+---
+description: Constants and variables use camelCase
+globs: **/*.ts
+alwaysApply: false
+---
+
+# Константы и переменные: camelCase
+
+Имена констант и переменных пиши в **camelCase**, а не в UPPER_SNAKE_CASE.
+
+```typescript
+// ✅ GOOD
+const dayOrder: DayOfWeek[] = [...];
+export const mealTypeOrder: MealType[] = [...];
+const dbName = "cooking-db";
+const dbVersion = 2;
+
+// ❌ BAD
+const DAY_ORDER: DayOfWeek[] = [...];
+export const MEAL_TYPE_ORDER: MealType[] = [...];
+const DB_NAME = "cooking-db";
+```
+
+Исключение: если в проекте явно оговорено иное (например, конфиг для сборки).

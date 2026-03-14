@@ -6,14 +6,14 @@ import { getUnitLabel } from "../../../types/units";
 import { mealPlanStore } from "../../meal-plan/services/meal-plan-store";
 import { store } from "../../../services/store";
 
-const DAY_ORDER: DayOfWeek[] = [
-  DayOfWeek.MONDAY,
-  DayOfWeek.TUESDAY,
-  DayOfWeek.WEDNESDAY,
-  DayOfWeek.THURSDAY,
-  DayOfWeek.FRIDAY,
-  DayOfWeek.SATURDAY,
-  DayOfWeek.SUNDAY,
+const dayOrder: DayOfWeek[] = [
+  DayOfWeek.Monday,
+  DayOfWeek.Tuesday,
+  DayOfWeek.Wednesday,
+  DayOfWeek.Thursday,
+  DayOfWeek.Friday,
+  DayOfWeek.Saturday,
+  DayOfWeek.Sunday,
 ];
 
 function makeItemKey(name: string, unit: string): string {
@@ -42,17 +42,16 @@ export class ShoppingListStore {
   }
 
   get items(): IShoppingListItem[] {
-    const plan = mealPlanStore.plan;
     const recipes = store.recipeViwer.recipes;
-    if (!plan) return [];
+    if (!mealPlanStore.plan) return [];
 
     const byKey: Record<
       string,
       { name: string; amount: number; unit: import("../../../types/types").Unit; recipeTitles: Set<string> }
     > = {};
 
-    for (const day of DAY_ORDER) {
-      const recipeIds = plan.plan[day] ?? [];
+    for (const day of dayOrder) {
+      const recipeIds = mealPlanStore.getRecipeIdsForDay(day);
       for (const recipeId of recipeIds) {
         const recipe = recipes.find((r) => r.id === recipeId);
         if (!recipe) continue;

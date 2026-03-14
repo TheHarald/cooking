@@ -2,11 +2,11 @@
 import { openDB, deleteDB } from "idb";
 import type { ICookingDB } from "./schema";
 
-const DB_NAME = "cooking-db";
-const DB_VERSION = 2;
+const dbName = "cooking-db";
+const dbVersion = 2;
 
 export async function initDB() {
-  const db = await openDB<ICookingDB>(DB_NAME, DB_VERSION, {
+  const db = await openDB<ICookingDB>(dbName, dbVersion, {
     upgrade(db, oldVersion, newVersion) {
       console.log(`Upgrading DB from ${oldVersion} to ${newVersion}`);
 
@@ -39,7 +39,7 @@ export async function initDB() {
 
 // Удаление базы данных
 export async function dropDB() {
-  await deleteDB(DB_NAME, {
+  await deleteDB(dbName, {
     blocked() {
       console.log("Database deletion blocked");
     },
