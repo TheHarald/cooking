@@ -1,13 +1,14 @@
+import { observer } from "mobx-react-lite";
 import { Select, SelectItem } from "@heroui/react";
 import { Languages } from "../../../i18n";
 import { useTranslation } from "react-i18next";
 
 const languages = [
-  { value: Languages.RU, title: "Русский" },
-  { value: Languages.EN, title: "English" },
+  { value: Languages.Ru, title: "Русский" },
+  { value: Languages.En, title: "English" },
 ];
 
-export const LanguageSelector = () => {
+export const LanguageSelector = observer(() => {
   const { i18n } = useTranslation();
 
   const changeLanguage = (lng: Languages) => {
@@ -28,4 +29,4 @@ export const LanguageSelector = () => {
       ))}
     </Select>
   );
-};
+});

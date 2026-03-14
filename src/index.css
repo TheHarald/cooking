@@ -16,10 +16,21 @@ html, body {
 
 
 
+/* Safe area для устройств с вырезами и индикаторами (iPhone, Android жесты) */
 .safe-bottom {
-  padding-bottom: 38px;
+  padding-bottom: max(env(safe-area-inset-bottom, 0px), 8px);
 }
 
 .safe-top {
-  padding-top:20px;
+  padding-top: max(env(safe-area-inset-top, 0px), 8px);
+}
+
+/* Нижний отступ под кнопки в модалках, чтобы не перекрывала панель телефона */
+.safe-area-bottom {
+  padding-bottom: max(env(safe-area-inset-bottom, 0px), 16px);
+}
+
+/* Отступ внизу прокручиваемого контента (последний контент не под индикатором) */
+.scroll-safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }

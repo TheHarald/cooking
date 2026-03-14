@@ -10,7 +10,7 @@ export const RecipeConstructorIngredientsList = observer(() => {
 
   const { targetRecipe } = recipeConstructor;
 
-  if (targetRecipe === undefined) return null;
+  if (targetRecipe === undefined) return undefined;
 
   const { ingredients } = targetRecipe;
 
@@ -20,7 +20,6 @@ export const RecipeConstructorIngredientsList = observer(() => {
         return <IngredientCard key={ingredient.id} ingredient={ingredient} />;
       })}
       <Button
-        size="lg"
         color="primary"
         startContent={<PlusCircle className="size-6" />}
         onPress={() => recipeConstructor.setIngredient(defaultIngredient)}

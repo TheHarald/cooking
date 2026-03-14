@@ -60,7 +60,7 @@ export const ConfirmationWrapper = (props: TProps) => {
         <ModalContent>
           <ModalHeader>{title}</ModalHeader>
           <ModalBody>{message}</ModalBody>
-          <ModalFooter>
+          <ModalFooter className="safe-area-bottom">
             <Button variant="flat" onPress={closeModal}>
               {cancelText}
             </Button>
