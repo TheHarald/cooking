@@ -3,7 +3,7 @@ import type { IRecipe, IIngredient, ICookingStep } from "../../../types/types";
 import { getUnitLabel } from "../../../types/units";
 import { MealImage } from "./meal-image";
 import { useTranslation } from "react-i18next";
-import { useMemo, useEffect } from "react";
+import { useMemo } from "react";
 
 function IngredientRow({ name, amount, unit, note }: IIngredient) {
   const unitLabel = getUnitLabel(unit);
@@ -73,17 +73,6 @@ export const RecipeView = observer<{ recipe: IRecipe }>(({ recipe }) => {
     image,
   } = recipe;
 
-  const imageSrc = useMemo(
-    () => (image ? URL.createObjectURL(image) : undefined),
-    [image]
-  );
-
-  useEffect(() => {
-    return () => {
-      if (imageSrc) URL.revokeObjectURL(imageSrc);
-    };
-  }, [imageSrc]);
-
   const sortedSteps = useMemo(
     () => [...cookingSteps].sort((a, b) => a.order - b.order),
     [cookingSteps]
@@ -94,7 +83,7 @@ export const RecipeView = observer<{ recipe: IRecipe }>(({ recipe }) => {
       <div className="flex flex-col gap-3">
         <h1 className="text-xl font-semibold text-foreground">{title}</h1>
 
-        <MealImage src={imageSrc} alt="" variant="large" />
+        <MealImage image={image} alt="" variant="large" />
 
         {description?.trim() && (
           <p className="text-default-600 text-sm">{description}</p>

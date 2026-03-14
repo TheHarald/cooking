@@ -1,3 +1,4 @@
+import { observer } from "mobx-react-lite";
 import { Button } from "@heroui/react";
 import { BuildInfo } from "./components/build-info";
 import { LanguageSelector } from "./components/language-selector";
@@ -5,7 +6,7 @@ import { ConfirmationWrapper } from "../../components/confirmation-wrapper";
 import { dropDB } from "../../db/index-db";
 import { useTranslation } from "react-i18next";
 
-export const SettingsModule = () => {
+export const SettingsModule = observer(() => {
   const { t } = useTranslation();
 
   return (
@@ -25,4 +26,4 @@ export const SettingsModule = () => {
       </ConfirmationWrapper>
     </div>
   );
-};
+});

@@ -1,10 +1,14 @@
+import { useEffect, useMemo } from "react";
 import { UtensilsCrossedIcon } from "lucide-react";
 import classNames from "classnames";
 
 type MealImageVariant = "card" | "large";
 
 type MealImageProps = {
-  src: string | undefined;
+  /** Файл изображения — компонент сам создаёт object URL и освобождает при размонтировании */
+  image?: File | null;
+  /** Готовый URL (используется, если не передан image) */
+  src?: string | null;
   alt?: string;
   variant?: MealImageVariant;
   className?: string;
@@ -21,11 +25,25 @@ const placeholderIconSizes: Record<MealImageVariant, string> = {
 };
 
 export const MealImage = ({
-  src,
+  image,
+  src: srcProp,
   alt = "",
   variant = "card",
   className,
 }: MealImageProps) => {
+  const objectUrl = useMemo(
+    () => (image ? URL.createObjectURL(image) : undefined),
+    [image]
+  );
+
+  useEffect(() => {
+    return () => {
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+    };
+  }, [objectUrl]);
+
+  const src = image ? objectUrl : srcProp;
+
   return (
     <div
       className={classNames(

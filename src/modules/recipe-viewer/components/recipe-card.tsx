@@ -13,7 +13,6 @@ import { store } from "../../../services/store";
 import { EditIcon, Eye, MoreVerticalIcon, TrashIcon } from "lucide-react";
 import { MealImage } from "./meal-image";
 import { useTranslation } from "react-i18next";
-import { useMemo, useEffect } from "react";
 
 export const RecipeCard = observer<{ recipe: IRecipe }>(({ recipe }) => {
   const { recipeConstructor, recipeViwer } = store;
@@ -25,20 +24,8 @@ export const RecipeCard = observer<{ recipe: IRecipe }>(({ recipe }) => {
     image,
     ingredients,
     cookingSteps = [],
-    isFavorite,
     tags,
   } = recipe;
-
-  const imageSrc = useMemo(
-    () => (image ? URL.createObjectURL(image) : undefined),
-    [image]
-  );
-
-  useEffect(() => {
-    return () => {
-      if (imageSrc) URL.revokeObjectURL(imageSrc);
-    };
-  }, [imageSrc]);
 
   const ingredientsCount = ingredients.length;
   const stepsCount = cookingSteps.length;
@@ -47,7 +34,7 @@ export const RecipeCard = observer<{ recipe: IRecipe }>(({ recipe }) => {
   return (
     <Card className="w-full overflow-hidden" shadow="sm">
       <CardBody className="flex flex-row p-0">
-        <MealImage src={imageSrc} alt={title} />
+        <MealImage image={image} alt={title} />
 
         <div className="min-w-0 flex-1 flex flex-col gap-1 p-3">
           <div className="flex items-start justify-between gap-2">
@@ -106,12 +93,6 @@ export const RecipeCard = observer<{ recipe: IRecipe }>(({ recipe }) => {
               )}
               {stepsCount > 0 && (
                 <span>{t("recipe-steps-count", { count: stepsCount })}</span>
-              )}
-              {isFavorite && (
-                <span className="text-primary" aria-hidden>♥</span>
-              )}
-              {tags.length > 0 && (
-                <span className="truncate">{tags.slice(0, 2).join(", ")}</span>
               )}
             </div>
           )}
