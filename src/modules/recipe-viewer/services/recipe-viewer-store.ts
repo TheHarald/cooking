@@ -5,11 +5,16 @@ import { addToast } from "@heroui/react";
 
 export class RecipeViewerStore {
   recipes: IRecipe[] = [];
+  viewingRecipe: IRecipe | undefined = undefined;
 
   constructor() {
     makeAutoObservable(this);
 
     this.getRecipesFromStrage();
+  }
+
+  setViewingRecipe(recipe: IRecipe | undefined) {
+    this.viewingRecipe = recipe;
   }
 
   public async getRecipesFromStrage() {

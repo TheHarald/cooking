@@ -27,5 +27,7 @@
   "nav-settings": "Настройки",
   "build-date": "Дата сборки: {{date}}",
   "recipe-ingredients-count": "{{count}} ингр.",
-  "recipe-steps-count": "{{count}} шагов"
+  "recipe-steps-count": "{{count}} шагов",
+  "recipe-duration-min": "{{count}} мин",
+  "recipe-view": "Смотреть рецепт"
 }

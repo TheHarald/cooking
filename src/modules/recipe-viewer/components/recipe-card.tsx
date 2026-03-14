@@ -10,13 +10,13 @@ import {
 import { observer } from "mobx-react-lite";
 import type { IRecipe } from "../../../types/types";
 import { store } from "../../../services/store";
-import { EditIcon, MoreVerticalIcon, TrashIcon } from "lucide-react";
+import { EditIcon, Eye, MoreVerticalIcon, TrashIcon } from "lucide-react";
 import { MealImage } from "./meal-image";
 import { useTranslation } from "react-i18next";
 import { useMemo, useEffect } from "react";
 
 export const RecipeCard = observer<{ recipe: IRecipe }>(({ recipe }) => {
-  const { recipeConstructor } = store;
+  const { recipeConstructor, recipeViwer } = store;
   const { t } = useTranslation();
 
   const {
@@ -67,6 +67,13 @@ export const RecipeCard = observer<{ recipe: IRecipe }>(({ recipe }) => {
                 </Button>
               </DropdownTrigger>
               <DropdownMenu>
+                <DropdownItem
+                  startContent={<Eye className="size-5" />}
+                  key="view"
+                  onPress={() => recipeViwer.setViewingRecipe(recipe)}
+                >
+                  {t("recipe-view")}
+                </DropdownItem>
                 <DropdownItem
                   startContent={<EditIcon className="size-5" />}
                   key="edit"

@@ -23,5 +23,7 @@
   "nav-settings": "Settings",
   "build-date": "Build date: {{date}}",
   "recipe-ingredients-count": "{{count}} ingr.",
-  "recipe-steps-count": "{{count}} steps"
+  "recipe-steps-count": "{{count}} steps",
+  "recipe-duration-min": "{{count}} min",
+  "recipe-view": "View recipe"
 }
