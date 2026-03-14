@@ -25,5 +25,14 @@
   "recipe-ingredients-count": "{{count}} ingr.",
   "recipe-steps-count": "{{count}} steps",
   "recipe-duration-min": "{{count}} min",
-  "recipe-view": "View recipe"
+  "recipe-view": "View recipe",
+  "step-add": "Add step",
+  "step-edit": "Edit step",
+  "step-description-label": "What to do",
+  "step-description-placeholder": "E.g.: Chop the onion and fry in oil until golden",
+  "step-duration-label": "Time, min",
+  "step-ingredients-label": "Ingredients in this step",
+  "save": "Save",
+  "steps-empty": "No steps yet. Add the first step — select ingredients and describe the actions.",
+  "step-uses-ingredients": "Ingredients"
 }

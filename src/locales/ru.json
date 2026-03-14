@@ -29,5 +29,14 @@
   "recipe-ingredients-count": "{{count}} ингр.",
   "recipe-steps-count": "{{count}} шагов",
   "recipe-duration-min": "{{count}} мин",
-  "recipe-view": "Смотреть рецепт"
+  "recipe-view": "Смотреть рецепт",
+  "step-add": "Добавить шаг",
+  "step-edit": "Редактировать шаг",
+  "step-description-label": "Что делать",
+  "step-description-placeholder": "Например: Нарезать лук кубиками и обжарить на масле до золотистого цвета",
+  "step-duration-label": "Время, мин",
+  "step-ingredients-label": "Ингредиенты в этом шаге",
+  "save": "Сохранить",
+  "steps-empty": "Шагов пока нет. Добавьте первый шаг — укажите ингредиенты и опишите действия.",
+  "step-uses-ingredients": "Ингредиенты"
 }

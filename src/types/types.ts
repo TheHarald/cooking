@@ -82,6 +82,8 @@ export interface ICookingStep {
   id: string;
   order: number;
   description: string;
+  /** id ингредиентов, которые используются в этом шаге */
+  ingredientIds?: string[];
   duration?: number;
   imageUrl?: string;
   timerEnabled?: boolean;

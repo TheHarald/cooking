@@ -1,4 +1,10 @@
-import { Modal, ModalBody, ModalContent, ModalHeader } from "@heroui/react";
+import {
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalHeader,
+  ScrollShadow,
+} from "@heroui/react";
 import { observer } from "mobx-react-lite";
 import { store } from "../../../services/store";
 import { RecipeView } from "./recipe-view";
@@ -18,7 +24,11 @@ export const RecipeViewModal = observer(() => {
           <span className="truncate">{viewingRecipe.title}</span>
         </ModalHeader>
         <ModalBody className="p-4 overflow-hidden flex-1 min-h-0">
-          <RecipeView recipe={viewingRecipe} />
+          <ScrollShadow className="h-full max-h-full overflow-y-auto" hideScrollBar>
+            <div className="pb-4">
+              <RecipeView recipe={viewingRecipe} />
+            </div>
+          </ScrollShadow>
         </ModalBody>
       </ModalContent>
     </Modal>
