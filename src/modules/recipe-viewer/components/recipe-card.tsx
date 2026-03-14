@@ -10,7 +10,8 @@ import {
 import { observer } from "mobx-react-lite";
 import type { IRecipe } from "../../../types/types";
 import { store } from "../../../services/store";
-import { EditIcon, MoreVerticalIcon, TrashIcon, UtensilsCrossedIcon } from "lucide-react";
+import { EditIcon, MoreVerticalIcon, TrashIcon } from "lucide-react";
+import { MealImage } from "./meal-image";
 import { useTranslation } from "react-i18next";
 import { useMemo, useEffect } from "react";
 
@@ -46,19 +47,7 @@ export const RecipeCard = observer<{ recipe: IRecipe }>(({ recipe }) => {
   return (
     <Card className="w-full overflow-hidden" shadow="sm">
       <CardBody className="flex flex-row p-0">
-        <div className="relative w-16 shrink-0 self-stretch min-h-16 overflow-hidden bg-default-100">
-          {imageSrc ? (
-            <img
-              src={imageSrc}
-              alt="meal-image"
-              className="h-full w-full object-cover"
-            />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center text-default-400">
-              <UtensilsCrossedIcon className="size-8" />
-            </div>
-          )}
-        </div>
+        <MealImage src={imageSrc} alt={title} />
 
         <div className="min-w-0 flex-1 flex flex-col gap-1 p-3">
           <div className="flex items-start justify-between gap-2">
