@@ -51,46 +51,52 @@ export const RecipeCard = observer<{ recipe: IRecipe }>(({ recipe }) => {
 
         <div className="min-w-0 flex-1 flex flex-col gap-1 p-3">
           <div className="flex items-start justify-between gap-2">
-            <h3 className="text-base font-medium text-foreground truncate">
+            <h3 className="text-base font-medium text-foreground truncate min-w-0">
               {title}
             </h3>
-            <Dropdown>
-              <DropdownTrigger>
-                <Button
-                  isIconOnly
-                  size="sm"
-                  variant="light"
-                  className="shrink-0"
-                  aria-label={t("edit")}
-                >
-                  <MoreVerticalIcon className="size-5" />
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu>
-                <DropdownItem
-                  startContent={<Eye className="size-5" />}
-                  key="view"
-                  onPress={() => recipeViwer.setViewingRecipe(recipe)}
-                >
-                  {t("recipe-view")}
-                </DropdownItem>
-                <DropdownItem
-                  startContent={<EditIcon className="size-5" />}
-                  key="edit"
-                  onPress={() => recipeConstructor.setRecipe(recipe)}
-                >
-                  {t("edit")}
-                </DropdownItem>
-                <DropdownItem
-                  key="delete"
-                  className="text-danger"
-                  startContent={<TrashIcon className="size-5" />}
-                  onPress={() => store.deleteRecipe(id)}
-                >
-                  {t("delete")}
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
+            <div className="flex items-center gap-1 shrink-0">
+              <Button
+                isIconOnly
+                size="sm"
+                variant="light"
+                color="primary"
+                aria-label={t("recipe-view")}
+                onPress={() => recipeViwer.setViewingRecipe(recipe)}
+              >
+                <Eye className="size-5" />
+              </Button>
+              <Dropdown>
+                <DropdownTrigger>
+                  <Button
+                    isIconOnly
+                    size="sm"
+                    variant="light"
+                    color="secondary"
+                    aria-label={t("edit")}
+                  >
+                    <MoreVerticalIcon className="size-5" />
+                  </Button>
+                </DropdownTrigger>
+                <DropdownMenu>
+                  <DropdownItem
+                    key="edit"
+                    className="text-secondary"
+                    startContent={<EditIcon className="size-5 shrink-0" />}
+                    onPress={() => recipeConstructor.setRecipe(recipe)}
+                  >
+                    {t("edit")}
+                  </DropdownItem>
+                  <DropdownItem
+                    key="delete"
+                    className="text-danger"
+                    startContent={<TrashIcon className="size-5 shrink-0" />}
+                    onPress={() => store.deleteRecipe(id)}
+                  >
+                    {t("delete")}
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+            </div>
           </div>
 
           {hasMeta && (

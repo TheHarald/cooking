@@ -1,9 +1,18 @@
 import { Button, Card, CardBody } from "@heroui/react";
 import { observer } from "mobx-react-lite";
 import { useTranslation } from "react-i18next";
-import type { ICookingStep, IRecipe } from "../../../types/types";
+import type { IIngredient, ICookingStep, IRecipe } from "../../../types/types";
+import { getUnitLabel } from "../../../types/units";
 import { store } from "../../../services/store";
 import { EditIcon, Trash } from "lucide-react";
+
+function formatStepIngredient(ing: IIngredient): string {
+  const unitLabel = getUnitLabel(ing.unit);
+  const amount = `${ing.amount} ${unitLabel}`;
+  return ing.note?.trim()
+    ? `${ing.name} — ${amount} (${ing.note})`
+    : `${ing.name} — ${amount}`;
+}
 
 export const StepCard = observer<{
   step: ICookingStep;
@@ -13,9 +22,9 @@ export const StepCard = observer<{
   const { t } = useTranslation();
   const { order, description, ingredientIds = [], duration } = step;
 
-  const ingredientNames = ingredientIds
-    .map((id) => ingredients.find((i) => i.id === id)?.name)
-    .filter(Boolean) as string[];
+  const stepIngredients = ingredientIds
+    .map((id) => ingredients.find((i) => i.id === id))
+    .filter((ing): ing is IIngredient => ing != null);
 
   return (
     <Card shadow="sm">
@@ -25,10 +34,12 @@ export const StepCard = observer<{
         </span>
         <div className="min-w-0 flex-1">
           <p className="text-foreground line-clamp-2">{description}</p>
-          {ingredientNames.length > 0 && (
-            <p className="text-default-500 text-xs mt-1">
-              {ingredientNames.join(", ")}
-            </p>
+          {stepIngredients.length > 0 && (
+            <ul className="text-default-500 text-xs mt-1 list-none space-y-0.5">
+              {stepIngredients.map((ing) => (
+                <li key={ing.id}>{formatStepIngredient(ing)}</li>
+              ))}
+            </ul>
           )}
           {duration != null && duration > 0 && (
             <p className="text-default-400 text-xs mt-0.5">
@@ -38,23 +49,21 @@ export const StepCard = observer<{
         </div>
         <div className="flex shrink-0 gap-1">
           <Button
-            size="sm"
             variant="light"
             isIconOnly
             onPress={() => recipeConstructor.setStep(step)}
             aria-label="Редактировать"
           >
-            <EditIcon className="size-4" />
+            <EditIcon className="size-5" />
           </Button>
           <Button
-            size="sm"
             color="danger"
             variant="light"
             isIconOnly
             onPress={() => recipeConstructor.deleteStep(step.id)}
             aria-label="Удалить"
           >
-            <Trash className="size-4" />
+            <Trash className="size-5" />
           </Button>
         </div>
       </CardBody>

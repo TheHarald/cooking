@@ -26,7 +26,7 @@ export const IngredientCard = observer<{
             variant="light"
             isIconOnly
           >
-            <EditIcon className="size-6" />
+            <EditIcon className="size-5" />
           </Button>
           <Button
             onPress={() => recipeConstructor.deleteIngredient(id)}
@@ -34,7 +34,7 @@ export const IngredientCard = observer<{
             variant="light"
             isIconOnly
           >
-            <Trash className="size-6" />
+            <Trash className="size-5" />
           </Button>
         </div>
       </CardBody>
