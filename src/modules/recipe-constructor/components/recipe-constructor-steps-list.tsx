@@ -32,9 +32,7 @@ export const RecipeConstructorStepsList = observer(() => {
             />
           ))}
           <Button
-            size="lg"
             color="primary"
-            variant="flat"
             startContent={<PlusCircle className="size-6" />}
             onPress={() =>
               recipeConstructor.setStep({

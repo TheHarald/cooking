@@ -79,7 +79,7 @@ export const RecipeFormModal = observer(() => {
         <ModalFooter className="px-4 flex flex-row justify-between safe-area-bottom">
           <Button onPress={onCancel}>{t("cancel")}</Button>
           <Button color="primary" onPress={() => store.saveRecipe()}>
-            Сохранить
+            {t("save")}
           </Button>
         </ModalFooter>
       </ModalContent>

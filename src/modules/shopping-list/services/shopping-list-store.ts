@@ -16,12 +16,8 @@ const dayOrder: DayOfWeek[] = [
   DayOfWeek.Sunday,
 ];
 
-function makeItemKey(name: string, unit: string): string {
-  return `${name.toLowerCase().trim()}|${unit}`;
-}
-
 export class ShoppingListStore {
-  checkedState: Record<string, boolean> = {};
+  checkedState = new Map<string, boolean>();
 
   constructor() {
     makeAutoObservable(this);
@@ -32,11 +28,11 @@ export class ShoppingListStore {
     try {
       const state = await databaseStorage.getShoppingListChecked();
       runInAction(() => {
-        this.checkedState = state;
+        this.checkedState = new Map(Object.entries(state ?? {}));
       });
     } catch {
       runInAction(() => {
-        this.checkedState = {};
+        this.checkedState = new Map();
       });
     }
   }
@@ -45,10 +41,7 @@ export class ShoppingListStore {
     const recipes = store.recipeViwer.recipes;
     if (!mealPlanStore.plan) return [];
 
-    const byKey: Record<
-      string,
-      { name: string; amount: number; unit: import("../../../types/types").Unit; recipeTitles: Set<string> }
-    > = {};
+    const result: IShoppingListItem[] = [];
 
     for (const day of dayOrder) {
       const recipeIds = mealPlanStore.getRecipeIdsForDay(day);
@@ -56,39 +49,32 @@ export class ShoppingListStore {
         const recipe = recipes.find((r) => r.id === recipeId);
         if (!recipe) continue;
         for (const ing of recipe.ingredients) {
-          const key = makeItemKey(ing.name, ing.unit);
-          if (!byKey[key]) {
-            byKey[key] = { name: ing.name, amount: 0, unit: ing.unit, recipeTitles: new Set() };
-          }
-          byKey[key].amount += ing.amount;
-          byKey[key].recipeTitles.add(recipe.title);
+          const key = `${day}-${recipeId}-${ing.id}`;
+          result.push({
+            key,
+            name: ing.name,
+            amount: ing.amount,
+            unit: ing.unit,
+            unitLabel: getUnitLabel(ing.unit),
+            checked: this.checkedState.get(key) ?? false,
+            recipeTitles: [recipe.title],
+          });
         }
       }
     }
 
-    return Object.entries(byKey).map(([key, { name, amount, unit, recipeTitles }]) => ({
-      key,
-      name,
-      amount,
-      unit,
-      unitLabel: getUnitLabel(unit),
-      checked: this.checkedState[key] ?? false,
-      recipeTitles: Array.from(recipeTitles),
-    }));
+    return result;
   }
 
-  async toggleChecked(key: string) {
-    const next = !(this.checkedState[key] ?? false);
-    this.checkedState = { ...this.checkedState, [key]: next };
-    await databaseStorage.setShoppingItemChecked(key, next);
+  async toggleChecked(_key: string) {
+    // Пока заблокировано: чекбокс не меняет состояние
   }
 
   async clearChecked() {
-    const keys = Object.keys(this.checkedState);
-    for (const key of keys) {
+    for (const key of this.checkedState.keys()) {
       await databaseStorage.setShoppingItemChecked(key, false);
     }
-    this.checkedState = {};
+    this.checkedState = new Map();
   }
 }
 

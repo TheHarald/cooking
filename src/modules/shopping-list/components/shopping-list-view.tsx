@@ -4,7 +4,7 @@ import { shoppingListStore } from "../services/shopping-list-store";
 import { useTranslation } from "react-i18next";
 
 export const ShoppingListView = observer(() => {
-  const { items, toggleChecked } = shoppingListStore;
+  const { items } = shoppingListStore;
   const { t } = useTranslation();
 
   if (items.length === 0) {
@@ -22,7 +22,8 @@ export const ShoppingListView = observer(() => {
           <CardBody className="flex flex-row items-center gap-3 py-2">
             <Checkbox
               isSelected={item.checked}
-              onValueChange={() => toggleChecked(item.key)}
+              onValueChange={() => shoppingListStore.toggleChecked(item.key)}
+              isDisabled
               aria-label={item.name}
             />
             <span className={item.checked ? "line-through text-default-400" : ""}>
