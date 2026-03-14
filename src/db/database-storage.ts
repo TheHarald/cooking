@@ -1,4 +1,4 @@
-import type { IRecipe } from "../types/types";
+import type { IRecipe, IMealPlan } from "../types/types";
 import { initDB } from "./index-db";
 
 class DatabaseStorage {
@@ -6,29 +6,45 @@ class DatabaseStorage {
     return await initDB();
   }
 
-  // Добавление рецепта
   public async addRecipe(recipe: IRecipe): Promise<string> {
     const db = await this.getDB();
-    // Используем шорткат db.add()
     return await db.add("recipes", recipe);
   }
 
-  // Получение всех рецептов
   public async getAllRecipes(): Promise<IRecipe[]> {
     const db = await this.getDB();
     return await db.getAll("recipes");
   }
 
-  // Обновление рецепта
   public async updateRecipe(recipe: IRecipe): Promise<void> {
     const db = await this.getDB();
     await db.put("recipes", recipe);
   }
 
-  // Удаление рецепта
   public async deleteRecipe(id: string): Promise<void> {
     const db = await this.getDB();
     await db.delete("recipes", id);
+  }
+
+  public async getMealPlan(weekStart: string): Promise<IMealPlan | undefined> {
+    const db = await this.getDB();
+    return await db.get("mealPlans", weekStart);
+  }
+
+  public async putMealPlan(plan: IMealPlan): Promise<void> {
+    const db = await this.getDB();
+    await db.put("mealPlans", plan);
+  }
+
+  public async getShoppingListChecked(): Promise<Record<string, boolean>> {
+    const db = await this.getDB();
+    const all = await db.getAll("shoppingListChecked");
+    return Object.fromEntries(all.map(({ key, checked }) => [key, checked]));
+  }
+
+  public async setShoppingItemChecked(key: string, checked: boolean): Promise<void> {
+    const db = await this.getDB();
+    await db.put("shoppingListChecked", { key, checked });
   }
 }
 

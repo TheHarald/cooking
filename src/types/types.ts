@@ -93,6 +93,24 @@ export interface IRecipe {
   description?: string;
   tags: string[];
   ingredients: IIngredient[];
+  cookingSteps?: ICookingStep[];
   isFavorite: boolean;
   image?: File;
+}
+
+// Рацион на неделю: день → массив id рецептов
+export interface IMealPlan {
+  weekStart: string; // ISO date (YYYY-MM-DD) понедельника
+  plan: Partial<Record<DayOfWeek, string[]>>;
+}
+
+// Элемент списка покупок (агрегация ингредиентов из рецептов недели)
+export interface IShoppingListItem {
+  key: string;
+  name: string;
+  amount: number;
+  unit: Unit;
+  unitLabel?: string;
+  checked: boolean;
+  recipeTitles: string[];
 }

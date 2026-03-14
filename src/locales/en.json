@@ -1,4 +1,27 @@
 {
   "hello-world": "Hello world",
-  "recipe-constructor-title": "Meals"
+  "recipe-constructor-title": "Meals",
+  "ingredients": "Ingredients",
+  "settings": "Settings",
+  "cancel": "Cancel",
+  "meal-name": "Meal name",
+  "steps": "Steps",
+  "create": "Create",
+  "editing": "Editing",
+  "edit": "Edit",
+  "delete": "Delete",
+  "creation": "Creation",
+  "meal-plan-title": "Weekly meal plan",
+  "meal-plan-add-recipe": "Add meal",
+  "meal-plan-prev-week": "Previous week",
+  "meal-plan-next-week": "Next week",
+  "shopping-list-title": "Shopping list",
+  "shopping-list-empty": "Add meals to your weekly plan — the shopping list will appear here.",
+  "nav-meals": "Meals",
+  "nav-shopping": "Shopping",
+  "nav-plan": "Plan",
+  "nav-settings": "Settings",
+  "build-date": "Build date: {{date}}",
+  "recipe-ingredients-count": "{{count}} ingr.",
+  "recipe-steps-count": "{{count}} steps"
 }

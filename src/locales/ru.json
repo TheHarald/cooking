@@ -14,5 +14,18 @@
   "clear-database": "Очистка базы данных",
   "clear-database-message": "Вы уверены, что хотите очистить базу данных? Это действие необратимо.",
   "confirm-clear-database-text": "Очистить",
-  "creation": "Создание"
+  "creation": "Создание",
+  "meal-plan-title": "Рацион на неделю",
+  "meal-plan-add-recipe": "Добавить блюдо",
+  "meal-plan-prev-week": "Предыдущая неделя",
+  "meal-plan-next-week": "Следующая неделя",
+  "shopping-list-title": "Список покупок",
+  "shopping-list-empty": "Добавьте блюда в рацион на неделю — список покупок появится здесь.",
+  "nav-meals": "Блюда",
+  "nav-shopping": "Покупки",
+  "nav-plan": "Рацион",
+  "nav-settings": "Настройки",
+  "build-date": "Дата сборки: {{date}}",
+  "recipe-ingredients-count": "{{count}} ингр.",
+  "recipe-steps-count": "{{count}} шагов"
 }

@@ -2,111 +2,119 @@ import {
   Button,
   Card,
   CardBody,
-  CardFooter,
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-  Image,
 } from "@heroui/react";
 import { observer } from "mobx-react-lite";
 import type { IRecipe } from "../../../types/types";
 import { store } from "../../../services/store";
-import { EditIcon, MoreVerticalIcon, TrashIcon } from "lucide-react";
+import { EditIcon, MoreVerticalIcon, TrashIcon, UtensilsCrossedIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useMemo, useEffect } from "react";
 
-export const RecipeCard = observer<{
-  recipe: IRecipe;
-}>((props) => {
-  const { recipe } = props;
-
+export const RecipeCard = observer<{ recipe: IRecipe }>(({ recipe }) => {
   const { recipeConstructor } = store;
-
-  const { title, id } = recipe;
-
   const { t } = useTranslation();
 
-  return (
-    <Card>
-      <CardBody className="flex flex-row gap-2 justify-between items-center">
-        <div>{title}</div>
-        <Dropdown>
-          <DropdownTrigger>
-            <Button isIconOnly color="secondary" variant="light">
-              <MoreVerticalIcon className="size-6" />
-            </Button>
-          </DropdownTrigger>
-          <DropdownMenu>
-            <DropdownItem
-              startContent={<EditIcon className="size-6" />}
-              key="edit"
-              onPress={() => recipeConstructor.setRecipe(recipe)}
-            >
-              {t("edit")}
-            </DropdownItem>
-            <DropdownItem
-              key="delete"
-              className="text-danger"
-              startContent={<TrashIcon className="size-6" />}
-              onPress={() => store.deleteRecipe(id)}
-            >
-              {t("delete")}
-            </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
-      </CardBody>
-    </Card>
+  const {
+    title,
+    id,
+    image,
+    ingredients,
+    cookingSteps = [],
+    isFavorite,
+    tags,
+  } = recipe;
+
+  const imageSrc = useMemo(
+    () => (image ? URL.createObjectURL(image) : undefined),
+    [image]
   );
-});
 
-export const RecipeCard2 = observer<{
-  recipe: IRecipe;
-}>((props) => {
-  const { recipe } = props;
+  useEffect(() => {
+    return () => {
+      if (imageSrc) URL.revokeObjectURL(imageSrc);
+    };
+  }, [imageSrc]);
 
-  const { recipeConstructor } = store;
-
-  const { title, id, image } = recipe;
-
-  const { t } = useTranslation();
+  const ingredientsCount = ingredients.length;
+  const stepsCount = cookingSteps.length;
+  const hasMeta = ingredientsCount > 0 || stepsCount > 0 || tags.length > 0;
 
   return (
-    <Card isFooterBlurred className="w-full h-[200px] bg-content1-foreground">
-      <Image
-        removeWrapper
-        alt="Relaxing app background"
-        className="z-0 w-full h-full object-cover bg-default"
-        src={image ? URL.createObjectURL(image) : undefined}
-      />
-      <CardFooter className="absolute bottom-0 z-10 items-center w-full justify-between gap-4">
-        <div className="text-xl font-medium text-default overflow-hidden text-ellipsis text-nowrap w-full">
-          {title}
+    <Card className="w-full overflow-hidden" shadow="sm">
+      <CardBody className="flex flex-row p-0">
+        <div className="relative w-16 shrink-0 self-stretch min-h-16 overflow-hidden bg-default-100">
+          {imageSrc ? (
+            <img
+              src={imageSrc}
+              alt="meal-image"
+              className="h-full w-full object-cover"
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center text-default-400">
+              <UtensilsCrossedIcon className="size-8" />
+            </div>
+          )}
         </div>
-        <Dropdown>
-          <DropdownTrigger>
-            <Button isIconOnly color="primary" variant="light">
-              <MoreVerticalIcon className="size-6" />
-            </Button>
-          </DropdownTrigger>
-          <DropdownMenu>
-            <DropdownItem
-              startContent={<EditIcon className="size-6" />}
-              key="edit"
-              onPress={() => recipeConstructor.setRecipe(recipe)}
-            >
-              {t("edit")}
-            </DropdownItem>
-            <DropdownItem
-              key="delete"
-              className="text-danger"
-              startContent={<TrashIcon className="size-6" />}
-              onPress={() => store.deleteRecipe(id)}
-            >
-              {t("delete")}
-            </DropdownItem>
-          </DropdownMenu>
-        </Dropdown>
-      </CardFooter>
+
+        <div className="min-w-0 flex-1 flex flex-col gap-1 p-3">
+          <div className="flex items-start justify-between gap-2">
+            <h3 className="text-base font-medium text-foreground truncate">
+              {title}
+            </h3>
+            <Dropdown>
+              <DropdownTrigger>
+                <Button
+                  isIconOnly
+                  size="sm"
+                  variant="light"
+                  className="shrink-0"
+                  aria-label={t("edit")}
+                >
+                  <MoreVerticalIcon className="size-5" />
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu>
+                <DropdownItem
+                  startContent={<EditIcon className="size-5" />}
+                  key="edit"
+                  onPress={() => recipeConstructor.setRecipe(recipe)}
+                >
+                  {t("edit")}
+                </DropdownItem>
+                <DropdownItem
+                  key="delete"
+                  className="text-danger"
+                  startContent={<TrashIcon className="size-5" />}
+                  onPress={() => store.deleteRecipe(id)}
+                >
+                  {t("delete")}
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </div>
+
+          {hasMeta && (
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-default-500">
+              {ingredientsCount > 0 && (
+                <span>{t("recipe-ingredients-count", { count: ingredientsCount })}</span>
+              )}
+              {stepsCount > 0 && (
+                <span>{t("recipe-steps-count", { count: stepsCount })}</span>
+              )}
+              {isFavorite && (
+                <span className="text-primary" aria-hidden>♥</span>
+              )}
+              {tags.length > 0 && (
+                <span className="truncate">{tags.slice(0, 2).join(", ")}</span>
+              )}
+            </div>
+          )}
+        </div>
+      </CardBody>
     </Card>
   );
 });
