@@ -1,5 +1,6 @@
 {
   "recipe-constructor-title": "Блюда",
+  "search-recipes-placeholder": "Поиск по названию, тегам, ингредиентам",
   "ingredient-name-label": "Название ингредиента",
   "ingredient-name-placeholder": "Мука, сахар, соль...",
   "ingredients": "Ингредиенты",

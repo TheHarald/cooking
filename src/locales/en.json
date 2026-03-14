@@ -1,6 +1,7 @@
 {
   "hello-world": "Hello world",
   "recipe-constructor-title": "Meals",
+  "search-recipes-placeholder": "Search by name, tags, ingredients",
   "ingredients": "Ingredients",
   "settings": "Settings",
   "cancel": "Cancel",
