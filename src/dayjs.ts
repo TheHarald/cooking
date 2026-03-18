@@ -12,3 +12,5 @@ dayjs.extend(isSameOrAfter);
 dayjs.locale("ru");
 dayjs.extend(relativeTime);
 dayjs.extend(duration);
+
+export default dayjs;

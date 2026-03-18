@@ -43,6 +43,7 @@ export enum DayOfWeek {
 
 /** Приём пищи для распределения блюд в рационе */
 export enum MealType {
+  Unknown = "unknown",
   Breakfast = "breakfast",
   Lunch = "lunch",
   Dinner = "dinner",
@@ -117,7 +118,8 @@ export interface IMealPlanEntry {
 
 // Рацион: день недели → массив блюд (рецепт + опциональный лейбл)
 export interface IMealPlan {
-  weekStart: string; // ISO date (YYYY-MM-DD) понедельника
+  /** Ключ в БД: `"weekly"` — один циклический рацион; либо YYYY-MM-DD понедельника (старые данные) */
+  weekStart: string;
   plan: Partial<Record<DayOfWeek, IMealPlanEntry[]>>;
 }
 

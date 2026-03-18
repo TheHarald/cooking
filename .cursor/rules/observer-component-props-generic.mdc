@@ -1,0 +1,25 @@
+---
+description: Типизация пропсов observer-компонента через generic
+globs: "**/*.tsx"
+alwaysApply: false
+---
+
+# `observer` и пропсы: generic, не аннотация аргумента
+
+У компонентов с пропсами, обёрнутых в `observer` из `mobx-react-lite`, задавай тип пропсов **через generic** `observer<Props>`, а параметры колбэка **без явной типизации**:
+
+```tsx
+type DishRowProps = { entry: IMealPlanEntry };
+
+// ✅ GOOD
+const DishRow = observer<DishRowProps>(({ entry }) => {
+  // ...
+});
+
+// ❌ BAD
+const DishRow = observer(({ entry }: DishRowProps) => {
+  // ...
+});
+```
+
+Для компонентов **без пропсов** достаточно `observer(() => { ... })`.

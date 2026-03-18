@@ -1,0 +1,26 @@
+---
+description: Деструктуризация полей MobX-стора в компонентах
+globs: "**/*.tsx"
+alwaysApply: false
+---
+
+# Стор в React: деструктуризация полей
+
+В начале рендера компонента (после `observer`) **доставай из стора поля через деструктуризацию** — один блок для всех используемых observable/computed.
+
+```tsx
+// ✅ GOOD (имена полей стора не переименовывать)
+const { currentDayOfWeek, dishesForSelectedDay } = mealPlanStore;
+
+// ❌ BAD — по одному присваиванию
+const currentDayOfWeek = mealPlanStore.currentDayOfWeek;
+```
+
+**Методы стора не деструктурируй** — у методов класса потеряется `this`. Вызывай так:
+
+```tsx
+onPress={() => mealPlanStore.goToNextWeekday()}
+mealPlanStore.addDishToDay(day, recipe.id)
+```
+
+Если нужен один колбэк без лишних обёрток, можно `mealPlanStore.goToNextWeekday.bind(mealPlanStore)`, но проще оставить префикс `mealPlanStore.`.

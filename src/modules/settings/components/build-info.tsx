@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { Card, CardBody } from "@heroui/react";
 import { useTranslation } from "react-i18next";
 import { info } from "../services/settings";
-import dayjs from "dayjs";
+import dayjs from "../../../dayjs";
 import { HammerIcon } from "lucide-react";
 
 export const BuildInfo = observer(() => {

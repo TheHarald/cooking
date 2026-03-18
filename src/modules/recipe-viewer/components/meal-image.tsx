@@ -2,7 +2,7 @@ import { useEffect, useMemo } from "react";
 import { UtensilsCrossedIcon } from "lucide-react";
 import classNames from "classnames";
 
-type MealImageVariant = "card" | "large";
+type MealImageVariant = "card" | "large" | "fillParent";
 
 type MealImageProps = {
   /** Файл изображения — компонент сам создаёт object URL и освобождает при размонтировании */
@@ -17,11 +17,13 @@ type MealImageProps = {
 const variantClasses: Record<MealImageVariant, string> = {
   card: "w-16 shrink-0 self-stretch min-h-16",
   large: "w-full aspect-[4/3] max-h-56 rounded-xl",
+  fillParent: "absolute inset-0 h-full w-full",
 };
 
 const placeholderIconSizes: Record<MealImageVariant, string> = {
   card: "size-8",
   large: "size-16",
+  fillParent: "size-10",
 };
 
 export const MealImage = ({
