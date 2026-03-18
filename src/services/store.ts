@@ -2,16 +2,19 @@ import { makeAutoObservable, runInAction, toJS } from "mobx";
 import { addToast } from "@heroui/react";
 import { RecipeConstructorStore } from "../modules/recipe-constructor/services/recipe-constructor-store";
 import { RecipeViewerStore } from "../modules/recipe-viewer/services/recipe-viewer-store";
+import { ShoppingListStore } from "../modules/shopping-list/services/shopping-list-store";
 import { newId } from "./constants";
 import { databaseStorage } from "../db/database-storage";
 
 class AppStore {
   public recipeConstructor: RecipeConstructorStore;
   public recipeViwer: RecipeViewerStore;
+  public shoppingListStore: ShoppingListStore;
 
   constructor() {
     this.recipeConstructor = new RecipeConstructorStore();
     this.recipeViwer = new RecipeViewerStore();
+    this.shoppingListStore = new ShoppingListStore();
     makeAutoObservable(this);
   }
 

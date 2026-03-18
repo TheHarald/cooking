@@ -5,6 +5,7 @@ import { databaseStorage } from "../../../db/database-storage";
 import { getUnitLabel } from "../../../types/units";
 import { mealPlanStore } from "../../meal-plan/services/meal-plan-store";
 import { store } from "../../../services/store";
+import dayjs from "../../../dayjs";
 
 const dayOrder: DayOfWeek[] = [
   DayOfWeek.Monday,
@@ -16,12 +17,31 @@ const dayOrder: DayOfWeek[] = [
   DayOfWeek.Sunday,
 ];
 
+function normalizeIngredientName(name: string): string {
+  return name.trim().toLowerCase();
+}
+
+function getTodayDayOfWeek(): DayOfWeek {
+  const isoIdx = dayjs().isoWeekday() - 1;
+  return dayOrder[isoIdx];
+}
+
 export class ShoppingListStore {
   checkedState = new Map<string, boolean>();
+
+  selectedDay: DayOfWeek = getTodayDayOfWeek();
 
   constructor() {
     makeAutoObservable(this);
     this.loadCheckedState();
+  }
+
+  get dayOrder(): DayOfWeek[] {
+    return dayOrder;
+  }
+
+  setSelectedDay(day: DayOfWeek) {
+    this.selectedDay = day;
   }
 
   async loadCheckedState() {
@@ -41,29 +61,39 @@ export class ShoppingListStore {
     const recipes = store.recipeViwer.recipes;
     if (!mealPlanStore.plan) return [];
 
-    const result: IShoppingListItem[] = [];
+    const normalizedToItem = new Map<string, IShoppingListItem>();
+    const recipeIds = mealPlanStore.getRecipeIdsForDay(this.selectedDay);
 
-    for (const day of dayOrder) {
-      const recipeIds = mealPlanStore.getRecipeIdsForDay(day);
-      for (const recipeId of recipeIds) {
-        const recipe = recipes.find((r) => r.id === recipeId);
-        if (!recipe) continue;
-        for (const ing of recipe.ingredients) {
-          const key = `${day}-${recipeId}-${ing.id}`;
-          result.push({
-            key,
-            name: ing.name,
-            amount: ing.amount,
-            unit: ing.unit,
-            unitLabel: getUnitLabel(ing.unit),
-            checked: this.checkedState.get(key) ?? false,
-            recipeTitles: [recipe.title],
-          });
+    for (const recipeId of recipeIds) {
+      const recipe = recipes.find((r) => r.id === recipeId);
+      if (!recipe) continue;
+
+      for (const ing of recipe.ingredients) {
+        const normalizedName = normalizeIngredientName(ing.name);
+        const key = `${this.selectedDay}-${normalizedName}`;
+
+        const existing = normalizedToItem.get(key);
+        if (existing) {
+          // Группируем по имени (без количества). Только расширяем список рецептов.
+          if (!existing.recipeTitles.includes(recipe.title)) {
+            existing.recipeTitles.push(recipe.title);
+          }
+          continue;
         }
+
+        normalizedToItem.set(key, {
+          key,
+          name: ing.name,
+          amount: ing.amount,
+          unit: ing.unit,
+          unitLabel: getUnitLabel(ing.unit),
+          checked: this.checkedState.get(key) ?? false,
+          recipeTitles: [recipe.title],
+        });
       }
     }
 
-    return result;
+    return Array.from(normalizedToItem.values());
   }
 
   async toggleChecked(_key: string) {
@@ -77,5 +107,3 @@ export class ShoppingListStore {
     this.checkedState = new Map();
   }
 }
-
-export const shoppingListStore = new ShoppingListStore();
